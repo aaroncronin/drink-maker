@@ -1,3 +1,4 @@
+// app.js
 require('./db.js');
 const express = require('express');
 const session = require('express-session')
@@ -16,9 +17,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
 
 
-app.get('/', function(req, res) {
-    const queryResults = req.query
-    res.send('hi')
+app.get('/register', (req, res) => {
+    
+    res.render('register')
 });
 
 

@@ -52,31 +52,31 @@ An Example List of Pictures:
 
 /login - login page
 
-![login](charts/wireframes/login.png)
+![login](src/charts/wireframes/login.png)
 
 /register - register page
 
-![register](charts/wireframes/register.png)
+![register](src/charts/wireframes/register.png)
 
 /homepage - login page
 
-![homepage](charts/wireframes/homepage.png)
+![homepage](src/charts/wireframes/homepage.png)
 
 /gamesettings - login page
 
-![gamesettings](charts/wireframes/gamesettings.png)
+![gamesettings](src/charts/wireframes/gamesettings.png)
 
 /overallstats - login page
 
-![overall stats](charts/wireframes/overallstats.png)
+![overall stats](src/charts/wireframes/overallstats.png)
 
 /gameplay - login page
 
-![gameplay](charts/wireframes/gameplay.png)
+![gameplay](src/charts/wireframes/gameplay.png)
 
 ## Site Map
 
-![Site Map](charts/sitemap.png)
+![Site Map](src/charts/sitemap.png)
 
 ## User Stories
 
