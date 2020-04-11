@@ -1,48 +1,45 @@
-# Memory Game
+# Drink Maker
 
 ## Overview
 
-Everybody loves to procrastinate. Especially during this quarantine, people are always looking for something to do. So here comes Memory Game to give people something to do all day!
+Alcohol sales have increased more than 50% during quarantine compared to this time last year. People are passing the time by drinking, but sometimes just grabbing a liquor and a mixer can be boring. So here comes Drink Maker! 
 
-Memory Game is a web app that allows users to play a simple memory game. Once a user is logged in, they can choose the number of cards they want to play with, the number of cards that are required for a match, and even what kind of pictures they want to be on the cards. (There may be the possibility of users uploading their own pictures to play with). The app will keep track of a user's stats (like how many tries it takes to match all of the cards).
+Drink Maker allows people to select ingredients they have in their house and Drink Maker shows you different cocktails you could make. The site does not require someone to register or login, but they do have the option. If a user registers, then they can save drinks that they like to their account. During a time when people are looking for fun things to do in their homes, Drink Maker is the perfect solution!
 
 ## Data Model
 
-The application will store Users, Stats, and Lists of Pictures.
+The application will store Users and a User's Saved Drink
 
-* a user can have game-specific stats and overall stats
-* the category of pictures will be selected by a user for what they want the cards t be.
+* a user can save drinks they like to their account
+* the drinks are sourced from a cocktail API
 
 An Example User:
 
 ```javascript
 {
   username: "aaroncronin",
-  hash: // a password hash,
-  overall_stats: // an object that stores overall game stats,
-  game_stats: {tries: 3, matches: 0}// game specific stats, like counter keeping track of number of tries
+  password: // password hash
 }
 ```
-An Example User's Stats:
+An Example User's Saved Drinks:
 
 ```javascript
 {
   username: "aaroncronin" // references user,
-  games: // total number of games played
-  average_tries: [
-    {size4: 3, size5: 6, size6: 6, size7: 14} // sizes will from min to max possible
-  ]// average number of tries to finish a game by board size
+  drinks: [Drink] // array of Drink schema
 }
 ```
-An Example List of Pictures:
+An Example Drink:
 
 ```javascript
 {
-  name: "Dogs", // category of pictures
-  pictures: [ // array will be filled with up to 15 or so pictures, then user chooses how big they want the board to be, which determines the number of pictures taken from this array
-    "dogimage1.jpg",
-    "dogimage2.jpg"
-  ],
+  id: 123,
+  name: "margarita",
+  ingredients: [String],
+  instructions: String,
+  image: "margarita.png",
+  alcoholic: True,
+  glass: // type of glass the drink should be served in
 }
 ```
 
@@ -50,9 +47,9 @@ An Example List of Pictures:
 
 ## Wireframes
 
-/login - login page
+/signin - login page
 
-![login](src/charts/wireframes/login.png)
+![signin](src/charts/wireframes/signin.png)
 
 /register - register page
 
@@ -62,17 +59,17 @@ An Example List of Pictures:
 
 ![homepage](src/charts/wireframes/homepage.png)
 
-/gamesettings - login page
+/searchresults - login page
 
-![gamesettings](src/charts/wireframes/gamesettings.png)
+![gamesettings](src/charts/wireframes/searchresults.png)
 
-/overallstats - login page
+/drink - login page
 
-![overall stats](src/charts/wireframes/overallstats.png)
+![gameplay](src/charts/wireframes/drink.png)
 
-/gameplay - login page
+/saveddrinks - login page
 
-![gameplay](src/charts/wireframes/gameplay.png)
+![overall stats](src/charts/wireframes/saveddrinks.png)
 
 ## Site Map
 
@@ -81,13 +78,11 @@ An Example List of Pictures:
 ## User Stories
 
 1. as non-registered user, I can register a new account with the site
-2. as a user, I can log in to the site
-3. as a user, I can select the number of cards I want to play with
-4. as a user, I can select the number of cards required for a match
-5. as a user, I can select the category of pictures to be disiplayed on the cards
-6. as a user, I can play the memory game
-7. as a user, I can view the stats for the current game I am playing
-8. as a user, I can view my overall stats, which are accumulated from all the games I have played
+2. as a non-registered or registered user, I can see cocktails I can make by entering liquors and other ingredients I have in my house
+3. as a non-registered or registered user, I can view a drink's details, such as ingredients and instructions on how to make
+4. as a registered user, I can sign in to my account
+5. as a signed in user, I can save drinks I like to my account
+6. as a signed in user, I can view my saved drinks
 
 ## Research Topics
 
@@ -99,7 +94,7 @@ An Example List of Pictures:
     * I will use react for my frontend framework
     * I have never worked with react, only node for backend, so this will be a challenge for me
 * (4 points) Client side form validation when user registers
-    * users must enter valid strings for first name and last name
+    * users must enter a username and password to register
     * the "confirm password" field must match the "password" field at the register page
 
 ## [Link to Initial Main Project File](app.js) 
