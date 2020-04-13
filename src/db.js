@@ -1,26 +1,32 @@
 const mongoose = require('mongoose');
+const passportLocalMongoose = require('passport-local-mongoose')
 
 const User = new mongoose.Schema({
     username: String,
-    hash: String,
-    overall_stats: Object,
-    game_stats: Object
+    password: String,
 });
 
-const Stats = new mongoose.Schema({
-    username: String,
-    total_games: Number,
-    average_tries: Object
-});
-
-const Pictures = new mongoose.Schema({
+const Drink = new mongoose.Schema({
+    id: String,
     name: String,
-    pictures: Array
-})
+    ingredients: [String],
+    instructions: String,
+    image: String,
+    alcoholic: Boolean,
+    glass: String
+});
 
-mongoose.model('User', User);
-mongoose.model('Stats', Stats);
-mongoose.model('Pictures', Pictures);
+const SavedDrinks = new mongoose.Schema({
+    username: String,
+    drinks: [Drink]
+});
+
+const options = {
+    NoSaltValueStoredError: "SALTTTTT"
+}
+User.plugin(passportLocalMongoose, options)
+
+
 
 let dbconf;
 if (process.env.NODE_ENV === 'PRODUCTION') {
@@ -32,9 +38,12 @@ if (process.env.NODE_ENV === 'PRODUCTION') {
     const conf = JSON.parse(data);
     dbconf = conf.dbconf;
 } else {
-    dbconf = 'mongodb://localhost/MemoryGame';
+    dbconf = 'mongodb://localhost/DrinkMaker';
 }
 
+mongoose.model('User', User);
+mongoose.model('SavedDrinks', SavedDrinks);
+mongoose.model('Drink', Drink);
 
 mongoose.connect(dbconf, {
     useNewUrlParser: true, 

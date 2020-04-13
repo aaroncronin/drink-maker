@@ -1,6 +1,19 @@
+<h2>Enter Registration Info:</h2>
+{{error}}
 <form id='registerForm' method="POST">
-    Username:<input type="text" name="username">
-    Password:<input type="text" name="password">
-    Confirm Password: <input type="text" name="confirmPass">
-
+    Username:<input id="username" type="text" name="username" required>
+    Password:<input type="text" name="password" required>
+    
+    <input onclick="myFunction()" type="submit">
 </form>
+
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+
+  const x = document.getElementById("username").value;
+  
+}
+</script>

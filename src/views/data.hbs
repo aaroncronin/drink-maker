@@ -1,0 +1,45 @@
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<div id='id1'></div>
+
+<script>
+    
+    const y = ['a', 'b', 'c']
+
+    const baseurl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=l'
+    let s = new Set()
+    let m = new Map()
+    
+    $.getJSON(baseurl, function(data) {
+        let out = ""
+        let temp = ''
+        let xy = []
+        let count = 0
+        out += '<table><tr>'
+        
+        $.each(data['drinks'], function(index, d) {
+            
+            const abc = Object.keys(d).filter((ele) => d[ele] !== null && ele.includes("Ingredient"))
+            const ingreds = abc.map((ele) => d[ele])
+
+            
+            m.set(d.idDrink, ingreds)
+            out += '<td><img src=' + d.strDrinkThumb + '></td>'
+            ingreds.forEach((ele) => {
+                out += '<td>' + d.ele + '</td>'
+            })
+            
+            out += '</tr>'
+            
+        })
+        out += '</table>'
+
+        document.getElementById('id1').innerHTML = out
+        
+
+        
+
+        
+    })
+
+</script>
+<div id='id2'></div>
