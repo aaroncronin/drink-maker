@@ -104,12 +104,13 @@ let s = new Set();
 let flattened = [];
 
 let all_ingreds = [];
-const p = "../myapp/src/data.json";
+const p = "myapp/src/data.json";
 app.listen(PORT, () => {
   // check if file exists
   // else promises
   fs.stat(p, (err) => {
     if (!err) {
+      console.log("data json");
       fs.readFile(p, "utf8", function (err, data) {
         flattened = data;
       });
@@ -158,7 +159,8 @@ app.listen(PORT, () => {
 
           flattened = [].concat.apply([], arr);
           console.log("Data read.");
-          fs.writeFileSync("../myapp/src/data.json", JSON.stringify(flattened));
+          const data_obj = { all_ingreds: all_ingreds, data: flattened };
+          fs.writeFileSync("../myapp/src/data.json", JSON.stringify(data_obj));
           // save flattened to file
         })
         .catch(function () {

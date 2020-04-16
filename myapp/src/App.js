@@ -3,7 +3,10 @@ import "./App.css";
 import Data from "./routes/Data";
 import Homepage from "./routes/Homepage";
 import Register from "./routes/Register";
+import Item from "./routes/Item";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { all_ingreds } from "./data.json";
+import cocktail from "./routes/cocktail.png";
 
 class App extends Component {
   constructor(props) {
@@ -13,12 +16,7 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({
-      items: [
-        { ingred: "vodka", isChecked: false },
-        { ingred: "club soda", isChecked: false },
-        { ingred: "lime", isChecked: false },
-        { ingred: "whiskey", isChecked: false },
-      ],
+      items: all_ingreds,
     });
   }
 
@@ -32,25 +30,37 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route
-            path="/data"
-            render={(props) => <Data ingreds={this.state.items} {...props} />}
-          />
-          <Route path="/register" render={(props) => <Register {...props} />} />
-          <Route
-            path="/"
-            render={(props) => (
-              <Homepage
-                items={this.state.items}
-                handleChange={this.handleChange}
-                {...props}
-              />
-            )}
-          />
-        </Switch>
-      </Router>
+      <div>
+        <a href="/">
+          <div id="header">Drink Maker</div>
+        </a>
+        <img id="logo" src={cocktail}></img>
+        <div class="sidebar1"></div>
+        <div class="sidebar2"></div>
+        <Router>
+          <Switch>
+            <Route
+              path="/data"
+              render={(props) => <Data ingreds={this.state.items} {...props} />}
+            />
+            <Route
+              path="/register"
+              render={(props) => <Register {...props} />}
+            />
+            <Route path="/item" render={(props) => <Item {...props} />} />
+            <Route
+              path="/"
+              render={(props) => (
+                <Homepage
+                  items={this.state.items}
+                  handleChange={this.handleChange}
+                  {...props}
+                />
+              )}
+            />
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }

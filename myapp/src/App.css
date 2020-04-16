@@ -2,52 +2,118 @@ html {
   background-color: lightblue;
   color: #11283b;
   font-family: Arial, Helvetica, sans-serif;
-  margin-left: 5px;
-
 }
 
 img {
-  height: 100px;
-  width: 100px
+  height: 250px;
+  width: 250px;
 }
 
 div.gallery {
-  margin: 15px;
-  border: 1px solid red;
+  margin-left: 80px;
+
   float: left;
   width: 250px;
   text-align: center;
+  text-decoration: underline;
+  font-size: larger;
 }
 
-div.gallery:hover {
-  border: 1px solid #777;
+#header {
+  font-size: 90px;
+  background-color: #11283b;
+  color: white;
+  display: flex;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  position: relative;
 }
 
 #container {
-  width: 100%;
-  
+  display: flex;
 }
-
-#ingredientsTable {
+.ingredientsTable {
   overflow-y: scroll;
-  height: 500px;
-  width: 400px;
+  height: 400px;
+  width: 500px;
   display: block;
   float: left;
   border: 3px solid #11283b;
+  margin-left: 140px;
 }
-
-#ingredientsTable td {
+#allIngredients {
+  display: inline-block;
+}
+.ingredientsTable td {
   margin-bottom: 50px;
-  width: 400px;
+  width: 500px;
   font-size: larger;
   border: 2px dotted;
+  background-color: lightgrey;
 }
 
+#text {
+  text-align: center;
+}
 #yourIngredients {
-text-align: center
+  display: inline-block;
+  margin-right: 10%;
+  text-align: center;
 }
 
 input {
-  float: right
+  float: right;
+}
+
+#ingredient {
+  font-size: larger;
+}
+
+#submitIngredients {
+  font-size: larger;
+  position: absolute;
+  top: 645px;
+  right: 350px;
+}
+
+.text {
+  display: inline-block;
+  margin-left: 135px;
+}
+
+#logo {
+  height: 150px;
+  width: 150px;
+  top: 15px;
+  left: 450px;
+  position: absolute;
+}
+
+#link {
+  text-decoration: none;
+}
+
+.sidebar1 {
+  height: 100%;
+  width: 40px;
+  position: fixed;
+  background-color: #11283b;
+  overflow-x: hidden;
+}
+
+.sidebar2 {
+  height: 100%;
+  width: 40px;
+  position: fixed;
+  background-color: #11283b;
+  overflow-x: hidden;
+  right: 0;
+}
+a {
+  text-decoration: none;
+}
+
+#drinkInfo {
+  margin-left: 50px;
 }

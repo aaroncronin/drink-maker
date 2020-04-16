@@ -1,7 +1,7 @@
 import React from "react";
 
 function Homepage(props) {
-  const filteredData = props.items.filter((d) => d.isChecked);
+  let filteredData = props.items.filter((d) => d.isChecked);
 
   function handleSubmit(event) {
     localStorage.setItem("filteredItems", JSON.stringify(filteredData));
@@ -12,31 +12,42 @@ function Homepage(props) {
 
   return (
     <div className="App">
-      <h1>Select The Ingredients You Have in Your Home</h1>
       <form id="container" onSubmit={handleSubmit}>
-        <table id="ingredientsTable">
-          {props.items.map((d) => (
-            <tr>
-              <td>
-                <label>{d.ingred}</label>
-                <input
-                  type="checkbox"
-                  name={d.ingred}
-                  checked={d.isChecked}
-                  onChange={props.handleChange}
-                ></input>
-              </td>
-            </tr>
-          ))}
-        </table>
+        <div id="allIngredients">
+          <h2 class="text">Select The Ingredients You Have in Your Home</h2>
+          <table class="ingredientsTable">
+            {props.items.map((d) => (
+              <tr>
+                <td>
+                  <label>{d.ingred}</label>
+                  <input
+                    type="checkbox"
+                    name={d.ingred}
+                    checked={d.isChecked}
+                    onChange={props.handleChange}
+                  ></input>
+                </td>
+              </tr>
+            ))}
+          </table>
+        </div>
 
         <div id="yourIngredients">
-          Your Ingredients<br></br>
-          {filteredData.map((d) => (
-            <div>{d.ingred}</div>
-          ))}
+          <h2 class="text">Your Ingredients</h2>
+          <table class="ingredientsTable">
+            {filteredData.map((d) => (
+              <tr>
+                <td>
+                  <div id="ingredient">{d.ingred}</div>
+                </td>
+              </tr>
+            ))}
+          </table>
         </div>
-        <button type="submit">Submit</button>
+
+        <button id="submitIngredients" type="submit">
+          Submit
+        </button>
       </form>
     </div>
   );
