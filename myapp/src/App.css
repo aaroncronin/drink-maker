@@ -1,7 +1,9 @@
-html {
+html,
+body {
   background-color: lightblue;
   color: #11283b;
   font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
 }
 
 img {
@@ -11,7 +13,6 @@ img {
 
 div.gallery {
   margin-left: 80px;
-
   float: left;
   width: 250px;
   text-align: center;
@@ -62,7 +63,7 @@ div.gallery {
   text-align: center;
 }
 
-input {
+#checkbox {
   float: right;
 }
 
@@ -97,17 +98,17 @@ input {
 .sidebar1 {
   height: 100%;
   width: 40px;
-  position: fixed;
+  position: absolute;
   background-color: #11283b;
-  overflow-x: hidden;
+  margin-bottom: 0;
 }
 
 .sidebar2 {
   height: 100%;
   width: 40px;
-  position: fixed;
+  position: absolute;
   background-color: #11283b;
-  overflow-x: hidden;
+  margin-bottom: 0;
   right: 0;
 }
 a {
@@ -116,4 +117,36 @@ a {
 
 #drinkInfo {
   margin-left: 50px;
+}
+
+#registration {
+  height: 400px;
+  width: 400px;
+  margin-top: 100px;
+  background-color: #11283b;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#registration h1 {
+  padding-top: 5px;
+  color: lightgrey;
+  text-align: center;
+}
+#username {
+  padding: 5px;
+  margin-right: 50px;
+}
+
+label {
+  font-size: larger;
+  color: white;
+}
+
+#test {
+  margin: 0 auto;
+}
+
+#error {
+  color: white;
 }

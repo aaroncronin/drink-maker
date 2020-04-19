@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-class Register extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -27,10 +27,15 @@ class Register extends Component {
       password: this.state.password,
     };
     axios
-      .post("http://localhost:5000/register", user)
+      .post("http://localhost:5000/login", user)
       .then((res) => {
-        this.setState({ error: res.data.message });
-        console.log(res.data.message);
+        if (res.data === "success") {
+          this.props.history.push("/homepage");
+        } else {
+          this.setState({ error: res.data });
+        }
+
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -40,7 +45,7 @@ class Register extends Component {
   render() {
     return (
       <div id="registration">
-        <h1>Register Here</h1>
+        <h1>Login Here</h1>
 
         <form id="registerForm" onSubmit={this.onSubmit}>
           <label>Username: </label>
@@ -72,4 +77,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default Login;

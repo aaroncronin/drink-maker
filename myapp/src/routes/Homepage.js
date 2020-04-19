@@ -17,17 +17,20 @@ function Homepage(props) {
           <h2 class="text">Select The Ingredients You Have in Your Home</h2>
           <table class="ingredientsTable">
             {props.items.map((d) => (
-              <tr>
-                <td>
-                  <label>{d.ingred}</label>
-                  <input
-                    type="checkbox"
-                    name={d.ingred}
-                    checked={d.isChecked}
-                    onChange={props.handleChange}
-                  ></input>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>
+                    <label>{d.ingred}</label>
+                    <input
+                      id="checkbox"
+                      type="checkbox"
+                      name={d.ingred}
+                      checked={d.isChecked}
+                      onChange={props.handleChange}
+                    ></input>
+                  </td>
+                </tr>
+              </tbody>
             ))}
           </table>
         </div>

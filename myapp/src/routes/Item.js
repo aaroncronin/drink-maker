@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import cocktail from "./cocktail.png";
+
 class Item extends Component {
   constructor(props) {
     super(props);
   }
   render() {
     const { data } = this.props.location;
-    console.log(data);
+
     return (
       <div>
         <div id="drinkInfo">

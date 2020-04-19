@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { data } from "../data.json";
-import cocktail from "./cocktail.png";
 import { Link } from "react-router-dom";
 
 class Data extends Component {

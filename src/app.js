@@ -5,6 +5,8 @@ const session = require("express-session");
 const path = require("path");
 const app = express();
 const fetch = require("node-fetch");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 const fs = require("fs");
 
@@ -18,59 +20,100 @@ const PORT = 5000;
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
 app.use(passport.initialize());
+
 app.use(passport.session());
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.get("/register", function (req, res) {
+//CUSTOM MIDDLEWARE
+app.use(function (req, res, next) {
+  if (req.user) {
+    res.locals.currentUser = req.user;
+  }
+  next();
+});
+
+app.get("/register", (req, res) => {
   res.render("register");
 });
 
-app.post("/register", (req, res, next) => {
-  User.findOne({ username: req.body.username }, (err, user) => {
-    if (user) {
-      res.render("register", { error: "Username already in use!" });
-    } else {
-      const user = User(req.body);
-      user.save((err, saved) => {
-        if (err) {
-          console.log("error");
-        } else {
-          res.redirect("/");
-        }
+app.post("/register", (req, res) => {
+  console.log(req.body);
+  User.register(
+    new User({
+      username: req.body.username,
+    }),
+    req.body.password,
+    function (err, user) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+        //res.render("register");
+      }
+      passport.authenticate("local")(req, res, function () {
+        console.log("success");
+        //res.redirect("/");
       });
     }
-  });
-  /*
-    User.findOne({username: req.body.username}, (err, user) => {
-        passport.authenticate('local', (err, user, info) => {
+  );
+});
+// app.get("/register", function (req, res) {
+//   res.render("register");
+// });
 
-            console.log('HELLO')
-            
-            if (err) {
-                return next(err)
-            }
-    
-            if (!user) {
-                
-                return res.redirect('/register')
-    
-            }
-            req.logIn(user, function(err) {
-                if (err) {
-                    return next(err)
-    
-                }
-                return res.redirect('/')
-            })
-            
-        })(req, res, next)
-    })
+// app.post("/register", (req, res, next) => {
+//   User.findOne({ username: req.body.username }, (err, user) => {
+//     if (user) {
+//       res.render("register", { error: "Username already in use!" });
+//     } else {
+//       const user = User(req.body);
+//       user.save((err, saved) => {
+//         if (err) {
+//           console.log("error");
+//         } else {
+//           res.redirect("/");
+//         }
+//       });
+//     }
+//   });
+// });
 
-    */
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.post("/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.send("Password or username is incorrect!");
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      return res.send("success");
+    });
+  })(req, res, next);
+});
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
 });
 
 app.get("/data", (req, res) => {
@@ -81,15 +124,17 @@ app.get("/", (req, res) => {
   res.redirect("/users");
 });
 
-app.get("/users", (req, res) => {
+app.get("/hello", (req, res) => {
   User.find({}, (err, data) => {
-    res.render("users", { data });
+    res.send({ data });
   });
 });
 
 app.get("/ingreds", (req, res) => {
   res.send(all_ingreds);
 });
+
+app.get("/dummy", connectEnsureLogin.ensureLoggedIn(), (req, res) => {});
 
 const base = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
 let urls = [];

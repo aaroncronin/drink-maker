@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
 
 const User = new mongoose.Schema({
@@ -22,10 +23,7 @@ const SavedDrinks = new mongoose.Schema({
   drinks: [Drink],
 });
 
-const options = {
-  NoSaltValueStoredError: "SALTTTTT",
-};
-User.plugin(passportLocalMongoose, options);
+User.plugin(passportLocalMongoose);
 
 let dbconf;
 if (process.env.NODE_ENV === "PRODUCTION") {

@@ -4,6 +4,8 @@ import Data from "./routes/Data";
 import Homepage from "./routes/Homepage";
 import Register from "./routes/Register";
 import Item from "./routes/Item";
+import Users from "./routes/Users";
+import Login from "./routes/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { all_ingreds } from "./data.json";
 import cocktail from "./routes/cocktail.png";
@@ -37,8 +39,10 @@ class App extends Component {
         <img id="logo" src={cocktail}></img>
         <div class="sidebar1"></div>
         <div class="sidebar2"></div>
+
         <Router>
           <Switch>
+            <Route path="/users" render={(props) => <Users {...props} />} />
             <Route
               path="/data"
               render={(props) => <Data ingreds={this.state.items} {...props} />}
@@ -47,6 +51,7 @@ class App extends Component {
               path="/register"
               render={(props) => <Register {...props} />}
             />
+            <Route path="/login" render={(props) => <Login {...props} />} />
             <Route path="/item" render={(props) => <Item {...props} />} />
             <Route
               path="/"
