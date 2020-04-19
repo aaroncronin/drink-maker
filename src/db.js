@@ -35,7 +35,7 @@ if (process.env.NODE_ENV === "PRODUCTION") {
   const conf = JSON.parse(data);
   dbconf = conf.dbconf;
 } else {
-  dbconf = "mongodb://localhost/DrinkMaker";
+  dbconf = "mongodb://localhost/ac6296";
 }
 
 mongoose.model("User", User);

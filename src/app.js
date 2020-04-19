@@ -15,7 +15,7 @@ const connectEnsureLogin = require("connect-ensure-login");
 
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
@@ -150,6 +150,7 @@ let flattened = [];
 
 let all_ingreds = [];
 const p = "myapp/src/data.json";
+console.log(process.env.PORT);
 app.listen(PORT, () => {
   // check if file exists
   // else promises
