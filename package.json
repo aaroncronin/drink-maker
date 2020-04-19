@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"NODE_ENV=PRODUCTION nodemon src/app.js\" \"cd myapp && npm start\""
+    "dev": "concurrently \"NODE_ENV=PRODUCTION node src/app.js\" \"cd myapp && npm start\""
   },
   "repository": {
     "type": "git",
