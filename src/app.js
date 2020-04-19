@@ -69,26 +69,6 @@ app.post("/register", (req, res) => {
     }
   );
 });
-// app.get("/register", function (req, res) {
-//   res.render("register");
-// });
-
-// app.post("/register", (req, res, next) => {
-//   User.findOne({ username: req.body.username }, (err, user) => {
-//     if (user) {
-//       res.render("register", { error: "Username already in use!" });
-//     } else {
-//       const user = User(req.body);
-//       user.save((err, saved) => {
-//         if (err) {
-//           console.log("error");
-//         } else {
-//           res.redirect("/");
-//         }
-//       });
-//     }
-//   });
-// });
 
 app.get("/login", (req, res) => {
   res.render("login");
@@ -150,7 +130,15 @@ let flattened = [];
 
 let all_ingreds = [];
 const p = "myapp/src/data.json";
-console.log(process.env.PORT);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("myapp/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "myapp", "build", "index.html"));
+  });
+}
+
 app.listen(PORT, () => {
   // check if file exists
   // else promises

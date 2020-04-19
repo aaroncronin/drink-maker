@@ -35,14 +35,14 @@ if (process.env.NODE_ENV === "PRODUCTION") {
   const conf = JSON.parse(data);
   dbconf = conf.dbconf;
 } else {
-  dbconf = "mongodb://localhost/ac6296";
+  dbconf = "mongodb://localhost/DrinkMaker";
 }
 
 mongoose.model("User", User);
 mongoose.model("SavedDrinks", SavedDrinks);
 mongoose.model("Drink", Drink);
 
-mongoose.connect(dbconf, {
+mongoose.connect(process.env.MONGODB_URI || dbconf, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
