@@ -36,17 +36,19 @@ app.use(function (req, res, next) {
   }
   next();
 });
-
+app.use("/api", routes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("myapp/build"));
-  console.log("boombobmobm");
+
   console.log(path.join(__dirname, "..", "myapp", "build", "index.html"));
+
+  // app.get("/", (req, res) => [
+  //   res.sendFile(path.join(__dirname, "..", "myapp", "src", "App.js")),
+  // ]);
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "myapp", "build", "index.html"));
   });
 }
-
-app.use("/api", routes);
 
 const base = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
 let urls = [];
