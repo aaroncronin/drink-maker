@@ -10,7 +10,7 @@
     "heroku-postbuild": "npm run install-client && npm run build",
     "start": "node app.js",
     "client": "cd myapp && npm start",
-    "dev": "concurrently \"node src/app.js\" \"npm run client\""
+    "dev": "concurrently \"cd src && node app.js\" \"npm run client\""
   },
   "repository": {
     "type": "git",
