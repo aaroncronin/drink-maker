@@ -100,9 +100,9 @@ app.get("/data", (req, res) => {
   res.send(flattened);
 });
 
-app.get("/", (req, res) => {
-  res.redirect("/users");
-});
+// app.get("/", (req, res) => {
+//   res.redirect("/users");
+// });
 
 app.get("/hello", (req, res) => {
   User.find({}, (err, data) => {
