@@ -17,6 +17,8 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const PORT = process.env.PORT || 5000;
 
+const routes = require("./routes/routes");
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 
@@ -44,73 +46,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.get("/register", (req, res) => {
-  res.render("register");
-});
-
-app.post("/register", (req, res) => {
-  console.log(req.body);
-  User.register(
-    new User({
-      username: req.body.username,
-    }),
-    req.body.password,
-    function (err, user) {
-      if (err) {
-        console.log(err);
-        res.send(err);
-        //res.render("register");
-      }
-      passport.authenticate("local")(req, res, function () {
-        console.log("success");
-        //res.redirect("/");
-      });
-    }
-  );
-});
-
-app.get("/login", (req, res) => {
-  res.render("login");
-});
-
-app.post("/login", (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.send("Password or username is incorrect!");
-    }
-    req.logIn(user, function (err) {
-      if (err) {
-        return next(err);
-      }
-      return res.send("success");
-    });
-  })(req, res, next);
-});
-
-app.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/");
-});
-
-app.get("/data", (req, res) => {
-  res.send(flattened);
-});
-
-app.get("/hello", (req, res) => {
-  User.find({}, (err, data) => {
-    res.send({ data });
-  });
-});
-
-app.get("/ingreds", (req, res) => {
-  res.send(all_ingreds);
-});
-
-app.get("/dummy", connectEnsureLogin.ensureLoggedIn(), (req, res) => {});
-
 const base = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
 let urls = [];
 for (let i = 97; i <= 122; i++) {
@@ -134,6 +69,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+app.use("/routes", routes);
 app.listen(PORT, () => {
   // check if file exists
   // else promises
