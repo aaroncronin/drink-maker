@@ -37,7 +37,7 @@ app.use(function (req, res, next) {
   next();
 });
 app.use("/api", routes);
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "PRODUCTION") {
   app.use(express.static(path.join(__dirname, "..", "myapp", "build")));
 
   console.log(path.join(__dirname, "..", "myapp", "build", "index.html"));
