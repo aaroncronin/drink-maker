@@ -52,7 +52,7 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-app.get("/data", (req, res) => {
+router.get("/data", (req, res) => {
   res.send(flattened);
 });
 
@@ -67,3 +67,5 @@ router.get("/ingreds", (req, res) => {
 });
 
 //router.get("/dummy", connectEnsureLogin.ensureLoggedIn(), (req, res) => {});
+
+module.exports = router;
