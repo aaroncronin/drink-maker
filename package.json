@@ -8,7 +8,7 @@
     "build": "cd myapp && npm run build",
     "install-client": "cd myapp && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
-    "start": "npm run dev",
+    "start": "cd src && node app.js",
     "client": "cd myapp && npm start",
     "dev": "concurrently \"cd src && node app.js\" \"npm run client\""
   },

@@ -17,7 +17,6 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const PORT = process.env.PORT || 5000;
 
-app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: false }));
 
@@ -100,10 +99,6 @@ app.get("/data", (req, res) => {
   res.send(flattened);
 });
 
-// app.get("/", (req, res) => {
-//   res.redirect("/users");
-// });
-
 app.get("/hello", (req, res) => {
   User.find({}, (err, data) => {
     res.send({ data });
@@ -142,6 +137,7 @@ if (process.env.NODE_ENV === "production") {
 app.listen(PORT, () => {
   // check if file exists
   // else promises
+  console.log(PORT);
   fs.stat(p, (err) => {
     if (!err) {
       console.log("data json");
