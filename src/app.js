@@ -7,11 +7,9 @@ const app = express();
 const fetch = require("node-fetch");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const passport = require("passport");
 
 const fs = require("fs");
-
-const passport = require("passport");
-const connectEnsureLogin = require("connect-ensure-login");
 
 const PORT = process.env.PORT || 5000;
 
@@ -31,11 +29,6 @@ app.use(
 app.use(passport.initialize());
 
 app.use(passport.session());
-
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
 //CUSTOM MIDDLEWARE
 app.use(function (req, res, next) {
   if (req.user) {
