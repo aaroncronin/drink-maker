@@ -13,8 +13,6 @@ const fs = require("fs");
 const passport = require("passport");
 const connectEnsureLogin = require("connect-ensure-login");
 
-const mongoose = require("mongoose");
-const User = mongoose.model("User");
 const PORT = process.env.PORT || 5000;
 
 const routes = require("./routes/routes");
@@ -64,9 +62,9 @@ const p = "myapp/src/data.json";
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("myapp/build"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "myapp", "build", "index.html"));
-  });
+  // app.get("*", (req, res) => {
+  //   res.sendFile(path.join(__dirname, "myapp", "build", "index.html"));
+  // });
 }
 
 app.use("/routes", routes);
