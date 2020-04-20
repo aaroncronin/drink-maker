@@ -15,8 +15,8 @@ const PORT = process.env.PORT || 5000;
 
 const routes = require("./routes/routes");
 
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -37,6 +37,16 @@ app.use(function (req, res, next) {
   next();
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("myapp/build"));
+
+  // app.get("*", (req, res) => {
+  //   res.sendFile(path.join(__dirname, "myapp", "build", "index.html"));
+  // });
+}
+
+app.use("/routes", routes);
+
 const base = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
 let urls = [];
 for (let i = 97; i <= 122; i++) {
@@ -52,15 +62,6 @@ let flattened = [];
 let all_ingreds = [];
 const p = "myapp/src/data.json";
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("myapp/build"));
-
-  // app.get("*", (req, res) => {
-  //   res.sendFile(path.join(__dirname, "myapp", "build", "index.html"));
-  // });
-}
-
-app.use("/routes", routes);
 app.listen(PORT, () => {
   // check if file exists
   // else promises
