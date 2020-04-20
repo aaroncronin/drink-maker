@@ -20,18 +20,7 @@ class App extends Component {
     this.setState({
       items: all_ingreds,
     });
-    this.fetchAPIMessage();
   }
-
-  fetchAPIMessage = async () => {
-    try {
-      const res = await fetch(`/api/message`);
-      const { message } = await res.json();
-      this.setState({ message });
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   handleChange = (event) => {
     let items = this.state.items.map((d) =>
