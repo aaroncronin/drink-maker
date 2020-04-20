@@ -30,7 +30,7 @@ class Register extends Component {
       .post("http://localhost:5000/register", user)
       .then((res) => {
         this.setState({ error: res.data.message });
-        console.log(res.data.message);
+        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
