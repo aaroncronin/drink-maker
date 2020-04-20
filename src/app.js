@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.use("/routes", routes);
+app.use("/api", routes);
 
 const base = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
 let urls = [];
