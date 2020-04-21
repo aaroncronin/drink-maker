@@ -14,7 +14,7 @@ const fs = require("fs");
 const PORT = process.env.PORT || 5000;
 
 const routes = require("./routes/routes");
-
+console.log(process.env.MONGODB_URI);
 // app.use(express.static(path.join(__dirname, "public")));
 // app.use(express.urlencoded({ extended: false }));
 
