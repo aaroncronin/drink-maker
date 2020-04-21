@@ -36,7 +36,7 @@ app.use(function (req, res, next) {
   }
   next();
 });
-app.use("/", routes);
+app.use("/user", routes);
 
 app.use(express.static(path.join(__dirname, "..", "myapp", "build")));
 
