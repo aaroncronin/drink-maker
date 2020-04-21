@@ -3,23 +3,33 @@ body {
   background-color: lightblue;
   color: #11283b;
   font-family: Arial, Helvetica, sans-serif;
-  height: 100%;
+  overflow-y: auto;
 }
 
 img {
   height: 250px;
   width: 250px;
+  border-radius: 10px;
 }
-
-div.gallery {
-  margin-left: 80px;
+#galleryContainer {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.gallery {
+  margin-left: 40px;
   float: left;
-  width: 250px;
+  width: 270px;
+  height: 300px;
   text-align: center;
   text-decoration: underline;
   font-size: larger;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 10px;
 }
-
+.gallery img {
+  padding-top: 10px;
+}
 #header {
   font-size: 90px;
   background-color: #11283b;
@@ -39,7 +49,6 @@ div.gallery {
   height: 400px;
   width: 500px;
   display: block;
-  float: left;
   border: 3px solid #11283b;
   margin-left: 140px;
 }
@@ -57,6 +66,7 @@ div.gallery {
 #text {
   text-align: center;
 }
+
 #yourIngredients {
   display: inline-block;
   margin-right: 10%;
@@ -79,8 +89,12 @@ div.gallery {
 }
 
 .text {
-  display: inline-block;
-  margin-left: 135px;
+  float: left;
+  margin-left: 140px;
+}
+
+.ingredientsTable label {
+  color: #11283b;
 }
 
 #logo {
@@ -89,6 +103,10 @@ div.gallery {
   top: 15px;
   left: 450px;
   position: absolute;
+}
+
+#logo:hover {
+  transform: scaleX(-1);
 }
 
 #link {
@@ -117,6 +135,11 @@ a {
 
 #drinkInfo {
   margin-left: 50px;
+}
+
+.Data h1 {
+  margin-left: 80px;
+  font-size: 40px;
 }
 
 #registration {
@@ -149,4 +172,50 @@ label {
 
 #error {
   color: white;
+}
+#drinkPage {
+  margin-left: 8%;
+  display: grid;
+  grid-template-columns: repeat(2, 215px) repeat(3, 1fr);
+  grid-template-rows: 0.5fr 400px repeat(3, 1fr);
+  grid-column-gap: 10px;
+}
+
+#name {
+  display: block;
+  font-size: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-weight: bold;
+  grid-area: 1 / 1 / 2 / 6;
+}
+#drinkPage span {
+  font-size: 30px;
+  font-weight: bold;
+}
+#drinkPage img {
+  padding: 10px;
+  background-color: white;
+  height: 400px;
+  width: 400px;
+  grid-area: 2 / 1 / 5 / 3;
+  border-radius: 10px;
+}
+
+#drinkIngredients {
+  grid-area: 2 / 3 / 4 / 4;
+}
+
+#instructions {
+  width: 400px;
+  height: 50%;
+  padding: 20px;
+  background-color: white;
+  text-align: center;
+  border-radius: 10px;
+  font-size: larger;
+  grid-area: 2 / 4 / 4 / 6;
+}
+#instructions h3 {
+  text-decoration: underline;
 }

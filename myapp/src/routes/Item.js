@@ -7,17 +7,29 @@ class Item extends Component {
   render() {
     const { data } = this.props.location;
 
+    let drink = [];
+    for (let i = 0; i < data.ingredients.length; i++) {
+      if (data.measures[i] === undefined) {
+        drink.push(data.ingredients[i]);
+      } else {
+        drink.push(data.measures[i] + " " + data.ingredients[i]);
+      }
+    }
     return (
-      <div>
-        <div id="drinkInfo">
-          <div>{data.name}</div>
-          <img src={data.image}></img>
+      <div id="drinkPage">
+        <div id="name">{data.name}</div>
+        <img src={data.image}></img>
+        <div id="drinkIngredients">
+          <span>Ingredients:</span>
+          {drink.map((i) => (
+            <h3>{i}</h3>
+          ))}
         </div>
-        Ingredients: <div>{data.ingredients}</div>
-        <div>{data.measures}</div>
-        <div>{data.instructions}</div>
-        <div>{data.alcoholic}</div>
-        <div>{data.glass}</div>
+        <div id="instructions">
+          <h3>Instructions</h3>
+          {data.instructions}
+          <h2>Enjoy!</h2>
+        </div>
       </div>
     );
   }

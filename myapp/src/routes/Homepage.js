@@ -14,7 +14,7 @@ function Homepage(props) {
     <div className="App">
       <form id="container" onSubmit={handleSubmit}>
         <div id="allIngredients">
-          <h2 class="text">Select The Ingredients You Have in Your Home</h2>
+          <h2 class="text">Select The Ingredients In Your Home</h2>
           <table class="ingredientsTable">
             {props.items.map((d) => (
               <tbody>
@@ -47,7 +47,6 @@ function Homepage(props) {
             ))}
           </table>
         </div>
-
         <button id="submitIngredients" type="submit">
           Submit
         </button>

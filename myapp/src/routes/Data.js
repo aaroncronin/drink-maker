@@ -26,28 +26,30 @@ class Data extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="Data">
         <Link
           to={{
             pathname: "/homepage",
           }}
         ></Link>
 
-        <h1>All Drinks</h1>
-        {this.state.data.map((d) => (
-          <div class="gallery">
-            <img src={d.image}></img>
-            <Link
-              id="link"
-              to={{
-                pathname: "/item",
-                data: d,
-              }}
-            >
-              <div>{d.name}</div>
-            </Link>
-          </div>
-        ))}
+        <h1>Here Are The Drinks You Can Make</h1>
+        <div id="galleryContainer">
+          {this.state.data.map((d) => (
+            <div class="gallery">
+              <img src={d.image}></img>
+              <Link
+                id="link"
+                to={{
+                  pathname: "/item",
+                  data: d,
+                }}
+              >
+                <div>{d.name}</div>
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
