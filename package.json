@@ -4,7 +4,8 @@
   "description": "The content below is an example project proposal / requirements document. Replace the text below the lines marked \"__TODO__\" with details specific to your project. Remove the \"TODO\" lines.",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/app.js",
+    "build_client": "npm run build --prefix myapp"
   },
   "repository": {
     "type": "git",
