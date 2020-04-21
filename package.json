@@ -4,13 +4,8 @@
   "description": "The content below is an example project proposal / requirements document. Replace the text below the lines marked \"__TODO__\" with details specific to your project. Remove the \"TODO\" lines.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd myapp && npm run build",
-    "install-client": "cd myapp && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
     "start": "cd src && node app.js",
-    "client": "cd myapp && npm start",
-    "dev": "concurrently \"cd src && node app.js\" \"npm run client\""
+    "heroku-postbuild": "cd build && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
     "type": "git",
