@@ -25,7 +25,7 @@ const SavedDrinks = new mongoose.Schema({
 
 User.plugin(passportLocalMongoose);
 
-let dbconf;
+let dbconf = "mongodb://drinkUser:drinks123@localhost:27017/DrinkMaker";
 // if (process.env.NODE_ENV === "PRODUCTION") {
 //   const fs = require("fs");
 //   const path = require("path");

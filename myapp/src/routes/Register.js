@@ -30,7 +30,8 @@ class Register extends Component {
       .post("http://localhost:5000/user/register", user)
       .then((res) => {
         this.setState({ error: res.data.message });
-        console.log(res.data);
+        console.log("BOOOM");
+        console.log("hi" + res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -41,7 +42,6 @@ class Register extends Component {
     return (
       <div id="registration">
         <h1>Register Here</h1>
-
         <form id="registerForm" onSubmit={this.onSubmit}>
           <label>Username: </label>
           <input
