@@ -26,17 +26,17 @@ const SavedDrinks = new mongoose.Schema({
 User.plugin(passportLocalMongoose);
 
 let dbconf;
-if (process.env.NODE_ENV === "PRODUCTION") {
-  const fs = require("fs");
-  const path = require("path");
-  const fn = path.join(__dirname, "../config.json");
-  const data = fs.readFileSync(fn);
+// if (process.env.NODE_ENV === "PRODUCTION") {
+//   const fs = require("fs");
+//   const path = require("path");
+//   const fn = path.join(__dirname, "../config.json");
+//   const data = fs.readFileSync(fn);
 
-  const conf = JSON.parse(data);
-  dbconf = conf.dbconf;
-} else {
-  dbconf = "mongodb://localhost/DrinkMaker";
-}
+//   const conf = JSON.parse(data);
+//   dbconf = conf.dbconf;
+// } else {
+//   dbconf = "mongodb://localhost/DrinkMaker";
+// }
 
 mongoose.model("User", User);
 mongoose.model("SavedDrinks", SavedDrinks);
