@@ -46,3 +46,6 @@ mongoose.connect(process.env.MONGODB_URI || dbconf, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
+mongoose.connection.on("connected", console.log("YUPPPP"));
+mongoose.connection.on("error", console.log("NOPEEEE"));
