@@ -27,7 +27,7 @@ class Register extends Component {
       password: this.state.password,
     };
     axios
-      .post("http://localhost:5000/user/register", user)
+      .post("/user/register", user)
       .then((res) => {
         this.setState({ error: res.data.message });
         console.log("BOOOM");
