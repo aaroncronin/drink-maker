@@ -1,7 +1,7 @@
 // app.js
 require("./db.js");
 const express = require("express");
-//const session = require("express-session");
+const session = require("express-session");
 const path = require("path");
 const app = express();
 const fetch = require("node-fetch");
@@ -27,11 +27,11 @@ app.use(
 );
 
 app.use(passport.initialize());
-
 app.use(passport.session());
 //CUSTOM MIDDLEWARE
 app.use(function (req, res, next) {
   if (req.user) {
+    console.log(req.user);
     res.locals.currentUser = req.user;
   }
   next();

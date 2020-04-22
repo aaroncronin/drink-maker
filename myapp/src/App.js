@@ -9,17 +9,30 @@ import Login from "./routes/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { all_ingreds } from "./data.json";
 import cocktail from "./routes/cocktail.png";
+import axios from "axios";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: [] };
+    this.state = { items: [], loggedIn: false, username: null };
+
+    this.getUser = this.getUser.bind(this);
+    this.updateUser = this.updateUser.bind(this);
   }
 
   componentDidMount() {
     this.setState({
       items: all_ingreds,
     });
+    this.getUser();
+  }
+
+  updateUser(loggedIn, username) {
+    this.setState(loggedIn, username);
+  }
+
+  getUser() {
+    console.log(JSON.parse(localStorage.getItem("username")));
   }
 
   handleChange = (event) => {
@@ -39,7 +52,7 @@ class App extends Component {
         <img id="logo" src={cocktail}></img>
         <div class="sidebar1"></div>
         <div class="sidebar2"></div>
-
+        <div>{this.getUser}</div>
         <Router>
           <Switch>
             <Route path="/users" render={(props) => <Users {...props} />} />

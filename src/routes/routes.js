@@ -11,12 +11,7 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-router.get("/register", (req, res) => {
-  res.render("register");
-});
-
 router.post("/register", (req, res) => {
-  console.log(req.body);
   User.register(
     new User({
       username: req.body.username,
@@ -25,34 +20,39 @@ router.post("/register", (req, res) => {
     function (err, user) {
       if (err) {
         console.log(err);
-        res.send(err);
+        res.send(err.message);
         //res.render("register");
       }
       passport.authenticate("local")(req, res, function () {
         console.log("success");
-        //res.redirect("/");
+        console.log(req.user);
+        const info = { user: req.user.username };
+        res.send(info);
       });
     }
   );
 });
-
-router.get("/login", (req, res) => {
-  res.render("login");
-});
-
+// router.get("/login", (req, res) => {
+//   console.log("===== user!!======");
+//   if (req.user) {
+//     res.json({ user: req.user });
+//   } else {
+//     res.json({ user: null });
+//   }
+// });
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       return next(err);
     }
     if (!user) {
-      return res.send("Password or username is incorrect!");
+      res.send("Password or username is incorrect!");
     }
     req.logIn(user, function (err) {
       if (err) {
         return next(err);
       }
-      return res.send("success");
+      res.send({ user: user.username, message: "success" });
     });
   })(req, res, next);
 });

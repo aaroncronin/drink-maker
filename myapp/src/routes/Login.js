@@ -27,15 +27,16 @@ class Login extends Component {
       password: this.state.password,
     };
     axios
-      .post("http://localhost:5000/login", user)
+      .post("/user/login", user)
       .then((res) => {
-        if (res.data === "success") {
+        console.log(res.data.message);
+        console.log(res.data.user);
+        if (res.data.message === "success") {
+          localStorage.setItem("username", JSON.stringify(res.data.user));
           this.props.history.push("/homepage");
         } else {
           this.setState({ error: res.data });
         }
-
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

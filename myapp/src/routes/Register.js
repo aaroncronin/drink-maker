@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
 class Register extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ class Register extends Component {
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.state = { username: "", password: "", error: "" };
+    this.state = { username: "", password: "", error: "", isRegistered: false };
   }
 
   onChangeUsername(event) {
@@ -26,19 +27,22 @@ class Register extends Component {
       username: this.state.username,
       password: this.state.password,
     };
-    axios
-      .post("/user/register", user)
-      .then((res) => {
-        this.setState({ error: res.data.message });
-        console.log("BOOOM");
-        console.log("hi" + res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    axios.post("/user/register", user).then((res) => {
+      this.setState({ error: res.data });
+      console.log(res);
+      if (res.data === "success") {
+        this.setState({ isRegistered: true });
+      }
+    });
+    // .catch((error) => {
+    //   console.log(error);
+    // });
     this.setState({ name: "", password: "" });
   }
   render() {
+    if (this.state.isRegistered) {
+      return <Redirect to={{ pathname: "/login" }} />;
+    }
     return (
       <div id="registration">
         <h1>Register Here</h1>
