@@ -28,10 +28,11 @@ class Register extends Component {
       password: this.state.password,
     };
     axios.post("/user/register", user).then((res) => {
-      this.setState({ error: res.data });
       console.log(res);
-      if (res.data === "success") {
+      if (res.data.message === "success") {
         this.setState({ isRegistered: true });
+      } else {
+        this.setState({ error: res.data });
       }
     });
     // .catch((error) => {

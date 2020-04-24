@@ -219,3 +219,22 @@ label {
 #instructions h3 {
   text-decoration: underline;
 }
+
+#logIn {
+  right: 80px;
+  top: 10px;
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  font-size: larger;
+}
+
+#logIn a {
+  color: white;
+  padding-left: 5px;
+  text-decoration: underline;
+}
+
+#logout {
+  text-decoration: underline;
+}

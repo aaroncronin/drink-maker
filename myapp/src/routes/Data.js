@@ -11,7 +11,7 @@ class Data extends Component {
   componentDidMount() {
     const fData = JSON.parse(localStorage.getItem("filteredItems"));
     const x = fData.map((ele) => ele.ingred);
-    console.log(x);
+
     let l = [];
     data.forEach((drink) => {
       const newIngreds = drink.ingredients.map((d) => d.toUpperCase());

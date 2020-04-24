@@ -29,17 +29,23 @@ class Login extends Component {
     axios
       .post("/user/login", user)
       .then((res) => {
-        console.log(res.data.message);
-        console.log(res.data.user);
+        console.log(res.data);
+        // console.log(res.data.message);
+        // console.log(res.data.user);
         if (res.data.message === "success") {
           localStorage.setItem("username", JSON.stringify(res.data.user));
-          this.props.history.push("/homepage");
+          this.props.handleLogIn(res.data.user);
+          // this.props.updateUser({
+          //   loggedIn: true,
+          //   username: res.data.user,
+          // });
+          this.props.history.push("/");
         } else {
           this.setState({ error: res.data });
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.log("login error", error);
       });
     this.setState({ name: "", password: "" });
   }

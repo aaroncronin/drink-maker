@@ -1,22 +1,17 @@
 // app.js
 require("./db.js");
 const express = require("express");
-//const session = require("express-session");
+const session = require("express-session");
 const path = require("path");
 const app = express();
 const fetch = require("node-fetch");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
-
 const fs = require("fs");
 
 const PORT = process.env.PORT || 5000;
-
 const routes = require("./routes/routes");
-console.log(process.env.MONGODB_URI);
-// app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,13 +20,19 @@ app.use(
     extended: true,
   })
 );
-
+app.use(
+  session({
+    secret: "some secret value, changeme",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 //CUSTOM MIDDLEWARE
+
 app.use(function (req, res, next) {
   if (req.user) {
-    console.log(req.user);
     res.locals.currentUser = req.user;
   }
   next();
@@ -39,17 +40,39 @@ app.use(function (req, res, next) {
 app.use("/user", routes);
 
 app.use(express.static(path.join(__dirname, "..", "myapp", "build")));
+app.post("/user/login", (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      res.send("Password or username is incorrect!");
+    }
+    req.logIn(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.send({ user: user.username, message: "success" });
+    });
+  })(req, res, next);
+});
+app.get("/user/login", (req, res) => {
+  if (req.user !== undefined) {
+    res.send(req.user);
+  } else {
+    console.log("REQ USER UNDEFINED");
+  }
+});
+
+app.get("/user/logout", (req, res) => {
+  req.logout();
+  console.log("express side logout");
+  res.send("Logged Out");
+});
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "myapp", "build", "index.html"));
 });
-// if (process.env.NODE_ENV === "PRODUCTION") {
-//   app.use(express.static(path.join(__dirname, "..", "myapp", "build")));
-
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "..", "myapp", "build", "index.html"));
-//   });
-// }
 
 const base = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
 let urls = [];
@@ -62,10 +85,8 @@ let arr = [];
 let obj = {};
 let s = new Set();
 let flattened = [];
-
 let all_ingreds = [];
 const p = "myapp/src/data.json";
-
 app.listen(PORT, () => {
   // check if file exists
   // else promises
