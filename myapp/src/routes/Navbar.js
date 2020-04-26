@@ -1,33 +1,33 @@
 import React, { Component } from "react";
-import { Redirect, Route, Link } from "react-router-dom";
+import { Switch, Link, BrowserRouter } from "react-router-dom";
 import cocktail from "./cocktail.png";
 import axios from "axios";
 
 class Navbar extends Component {
-  constructor() {
-    super();
-    this.logout = this.logout.bind(this);
+  constructor(props) {
+    super(props);
   }
 
-  logout(event) {
+  logout = (event) => {
     event.preventDefault();
     axios.get("/user/logout").then((res) => {
-      this.props.handleLogOut({
-        loggedIn: false,
-        username: null,
-      });
-      //   this.props.updateUser({
-      //     loggedIn: false,
-      //     username: null,
-      //   });
+      if (res.data === "") {
+        this.props.handleLogOut({
+          loggedIn: false,
+          username: null,
+        });
+      }
     });
 
     //this.props.history.push("/");
-  }
+  };
 
   render() {
-    const loggedIn = this.props.loggedIn;
+    //const loggedIn = this.props.loggedIn;
+    const loggedIn = false;
+    const username = "acronin";
 
+    console.log("PROPS: ", this.props);
     return (
       <header>
         <div id="header">
@@ -37,7 +37,7 @@ class Navbar extends Component {
         <div id="logIn">
           {loggedIn ? (
             <div>
-              Hi, {this.props.username}! |
+              Hi, {username}! |
               <a id="logout" onClick={this.logout} href="/">
                 Logout
               </a>

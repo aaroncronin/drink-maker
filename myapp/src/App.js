@@ -7,7 +7,7 @@ import Item from "./routes/Item";
 import Users from "./routes/Users";
 import Login from "./routes/Login";
 import Navbar from "./routes/Navbar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { all_ingreds } from "./data.json";
 
 import axios from "axios";
@@ -15,49 +15,75 @@ import axios from "axios";
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: all_ingreds, loggedIn: false, username: null };
+    this.state = {
+      items: [],
+      loggedIn: false,
+      username: null,
+      filtered: [],
+    };
 
-    this.getUser = this.getUser.bind(this);
-    this.updateUser = this.updateUser.bind(this);
-    this.handleLogIn = this.handleLogIn.bind(this);
+    // this.getUser = this.getUser.bind(this);
+    // this.updateUser = this.updateUser.bind(this);
+    // this.handleLogIn = this.handleLogIn.bind(this);
+    // this.handleLogOut = this.handleLogOut.bind(this);
+    // this.saveIngredients = this.saveIngredients.bind(this);
   }
 
-  componentDidMount() {
+  // async
+  async componentDidMount() {
     // this.setState({
     //   items: all_ingreds,
     // });
-    this.getUser();
+
+    // await
+    await this.getUser();
+    console.log("HELLLOOOOO: state", this.state.loggedIn);
+    if (this.state.loggedIn) {
+      this.getItems();
+    } else {
+      this.setState({ items: all_ingreds });
+    }
+    // if logged in then getItems()
+    // else set to all_ingreds
   }
-  updateUser(obj) {
-    this.setState(obj);
-  }
-  getUser() {
-    console.log("getting user");
+  // updateUser(obj) {
+  //   this.setState(obj);
+  // }
+  getUser = () => {
     axios.get("/user/login").then((res) => {
-      console.log("login: ", res);
-      if (res.user.username) {
-        this.setState({ loggedIn: true, username: res.data.username });
-      } else {
+      if (res.data === "") {
         this.setState({
           loggedIn: false,
           username: null,
         });
+      } else if (res.data.username) {
+        this.setState({ loggedIn: true, username: res.data.username });
+
+        // getItems()
       }
     });
-  }
+    return;
+  };
 
-  handleLogIn(data) {
-    // STORE IN LOCAL STORAGE
-
-    // THEN USE GETUSER METHOD TO GET LOCAL STORAGE ITEM
+  // getItems() function sets items state based on log in
+  getItems = () => {
+    console.log("hi boob");
+    axios.get("/user/items").then((res) => {
+      console.log("items: ", res.data);
+    });
+  };
+  handleLogIn = (data) => {
     if (data !== null) {
       this.setState({ loggedIn: true, username: data });
     }
-  }
+  };
 
-  handleLogOut(obj) {
-    this.setState({ obj });
-  }
+  handleLogOut = (obj) => {
+    console.log(obj);
+    this.setState({ loggedIn: obj.loggedIn, username: obj.username });
+    console.log("state: ", this.state);
+  };
+
   handleChange = (event) => {
     let items = this.state.items.map((d) =>
       event.target.name === d.ingred ? { ...d, isChecked: !d.isChecked } : d
@@ -87,7 +113,11 @@ class App extends Component {
             <Route
               path="/login"
               render={(props) => (
-                <Login handleLogIn={this.handleLogIn} {...props} />
+                <Login
+                  handleLogIn={this.handleLogIn}
+                  loggedIn={this.state.loggedIn}
+                  {...props}
+                />
               )}
             />
             <Route path="/item" render={(props) => <Item {...props} />} />
@@ -96,6 +126,8 @@ class App extends Component {
               render={(props) => (
                 <Homepage
                   items={this.state.items}
+                  username={this.state.username}
+                  loggedIn={this.state.loggedIn}
                   handleChange={this.handleChange}
                   {...props}
                 />

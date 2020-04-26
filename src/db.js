@@ -23,6 +23,11 @@ const SavedDrinks = new mongoose.Schema({
   drinks: [Drink],
 });
 
+const UserIngredients = new mongoose.Schema({
+  username: String,
+  ingredients: [String],
+});
+
 User.plugin(passportLocalMongoose);
 
 let dbconf = "mongodb://drinkUser:drinks123@localhost:27017/DrinkMaker";
@@ -41,6 +46,7 @@ let dbconf = "mongodb://drinkUser:drinks123@localhost:27017/DrinkMaker";
 mongoose.model("User", User);
 mongoose.model("SavedDrinks", SavedDrinks);
 mongoose.model("Drink", Drink);
+mongoose.model("UserIngredients", UserIngredients);
 
 mongoose.connect(process.env.MONGODB_URI || dbconf, {
   useNewUrlParser: true,

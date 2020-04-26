@@ -57,22 +57,32 @@ app.post("/user/login", (req, res, next) => {
   })(req, res, next);
 });
 app.get("/user/login", (req, res) => {
-  if (req.user !== undefined) {
-    res.send(req.user);
-  } else {
-    console.log("REQ USER UNDEFINED");
-  }
+  res.send(req.user);
+  // if (req.user !== undefined) {
+  //   res.send(req.user);
+  // } else {
+  //   console.log("REQ USER UNDEFINED");
+  // }
 });
 
 app.get("/user/logout", (req, res) => {
   req.logout();
-  console.log("express side logout");
-  res.send("Logged Out");
+  res.send(req.user);
 });
 
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "myapp", "build", "index.html"));
+app.post("/user/saveIngredients", (req, res) => {
+  console.log(req.body);
 });
+
+app.get("/user/items", (req, res) => {
+  console.log("hello: ", req.user);
+  res.send("ABCDEF");
+});
+if (process.env.NODE_ENV === "PRODUCTION") {
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "myapp", "build", "index.html"));
+  });
+}
 
 const base = "https://www.thecocktaildb.com/api/json/v1/1/search.php?f=";
 let urls = [];

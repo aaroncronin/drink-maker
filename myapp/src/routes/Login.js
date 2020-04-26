@@ -29,16 +29,9 @@ class Login extends Component {
     axios
       .post("/user/login", user)
       .then((res) => {
-        console.log(res.data);
-        // console.log(res.data.message);
-        // console.log(res.data.user);
         if (res.data.message === "success") {
           localStorage.setItem("username", JSON.stringify(res.data.user));
           this.props.handleLogIn(res.data.user);
-          // this.props.updateUser({
-          //   loggedIn: true,
-          //   username: res.data.user,
-          // });
           this.props.history.push("/");
         } else {
           this.setState({ error: res.data });
@@ -55,28 +48,32 @@ class Login extends Component {
         <h1>Login Here</h1>
 
         <form id="registerForm" onSubmit={this.onSubmit}>
-          <label>Username: </label>
-          <input
-            id="username"
-            type="text"
-            value={this.state.username}
-            onChange={this.onChangeUsername}
-            required
-          />
-          <br />
-          <br />
-          <br />
-          <label>Password: </label>
-          <input
-            id="username"
-            type="text"
-            value={this.state.password}
-            onChange={this.onChangePassword}
-            required
-          />
-          <br />
-          <br />
-          <input id="submitButton" type="submit"></input>
+          <div id="usernameDiv">
+            <label>Username: </label>
+            <input
+              id="username"
+              type="text"
+              value={this.state.username}
+              onChange={this.onChangeUsername}
+              required
+            />
+            <br />
+            <br />
+            <br />
+          </div>
+          <div id="passwordDiv">
+            <label>Password: </label>
+            <input
+              id="password"
+              type="password"
+              value={this.state.password}
+              onChange={this.onChangePassword}
+              required
+            />
+            <br />
+            <br />
+            <input id="submitButton" type="submit"></input>
+          </div>
         </form>
         <h3 id="error">{this.state.error}</h3>
       </div>
