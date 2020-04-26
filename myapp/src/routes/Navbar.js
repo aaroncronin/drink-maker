@@ -8,26 +8,22 @@ class Navbar extends Component {
     super(props);
   }
 
-  logout = (event) => {
-    event.preventDefault();
+  logout = () => {
     axios.get("/user/logout").then((res) => {
       if (res.data === "") {
         this.props.handleLogOut({
           loggedIn: false,
           username: null,
         });
+        this.props.history.push("/");
       }
     });
 
-    //this.props.history.push("/");
+    //
   };
 
   render() {
-    //const loggedIn = this.props.loggedIn;
-    const loggedIn = false;
-    const username = "acronin";
-
-    console.log("PROPS: ", this.props);
+    const loggedIn = this.props.loggedIn;
     return (
       <header>
         <div id="header">
@@ -37,19 +33,15 @@ class Navbar extends Component {
         <div id="logIn">
           {loggedIn ? (
             <div>
-              Hi, {username}! |
-              <BrowserRouter>
-                <Link id="logout" onClick={this.logout} to="/">
-                  Logout
-                </Link>
-              </BrowserRouter>
+              Hi, {this.props.username}! |
+              <Link id="logout" onClick={this.logout} to="/">
+                Logout
+              </Link>
             </div>
           ) : (
             <div>
-              <BrowserRouter>
-                <Link to="/login">Log In</Link> |
-                <Link to="/register">Register</Link>
-              </BrowserRouter>
+              <Link to="/login">Log In</Link> |
+              <Link to="/register">Register</Link>
             </div>
           )}
         </div>

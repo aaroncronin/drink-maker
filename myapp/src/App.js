@@ -46,9 +46,7 @@ class App extends Component {
     // if logged in then getItems()
     // else set to all_ingreds
   }
-  // updateUser(obj) {
-  //   this.setState(obj);
-  // }
+
   getUser = () => {
     axios.get("/user/login").then((res) => {
       if (res.data === "") {
@@ -67,7 +65,7 @@ class App extends Component {
 
   // getItems() function sets items state based on log in
   getItems = () => {
-    console.log("hi boob");
+    console.log("hello");
     axios.get("/user/items").then((res) => {
       console.log("items: ", res.data);
     });
@@ -94,12 +92,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar
-          loggedIn={this.state.loggedIn}
-          username={this.state.username}
-          handleLogOut={this.handleLogOut}
-        />
         <Router>
+          <Navbar
+            loggedIn={this.state.loggedIn}
+            username={this.state.username}
+            handleLogOut={this.handleLogOut}
+          />
           <Switch>
             <Route path="/users" render={(props) => <Users {...props} />} />
             <Route
