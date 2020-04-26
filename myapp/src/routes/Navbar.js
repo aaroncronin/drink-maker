@@ -38,13 +38,18 @@ class Navbar extends Component {
           {loggedIn ? (
             <div>
               Hi, {username}! |
-              <a id="logout" onClick={this.logout} href="/">
-                Logout
-              </a>
+              <BrowserRouter>
+                <Link id="logout" onClick={this.logout} to="/">
+                  Logout
+                </Link>
+              </BrowserRouter>
             </div>
           ) : (
             <div>
-              <a href="/login">Log In</a> |<a href="/register">Register</a>
+              <BrowserRouter>
+                <Link to="/login">Log In</Link> |
+                <Link to="/register">Register</Link>
+              </BrowserRouter>
             </div>
           )}
         </div>
