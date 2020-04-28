@@ -15,6 +15,7 @@ class Item extends Component {
         drink.push(data.measures[i] + " " + data.ingredients[i]);
       }
     }
+    document.body.style.overflow = "auto";
     return (
       <div id="drinkPage">
         <div id="name">{data.name}</div>

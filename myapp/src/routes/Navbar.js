@@ -15,11 +15,8 @@ class Navbar extends Component {
           loggedIn: false,
           username: null,
         });
-        this.props.history.push("/");
       }
     });
-
-    //
   };
 
   render() {
@@ -27,7 +24,7 @@ class Navbar extends Component {
     return (
       <header>
         <div id="header">
-          <a href="/">Drink Maker</a>
+          <Link to="/">Drink Maker</Link>
         </div>
         <img id="logo" src={cocktail}></img>
         <div id="logIn">
@@ -40,13 +37,11 @@ class Navbar extends Component {
             </div>
           ) : (
             <div>
-              <Link to="/login">Log In</Link> |
+              <Link to="/login">Login</Link> |
               <Link to="/register">Register</Link>
             </div>
           )}
         </div>
-        <div class="sidebar1"></div>
-        <div class="sidebar2"></div>
       </header>
     );
   }

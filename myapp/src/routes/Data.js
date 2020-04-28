@@ -10,9 +10,9 @@ class Data extends Component {
 
   componentDidMount() {
     const fData = JSON.parse(localStorage.getItem("filteredItems"));
-    console.log(fData);
+    document.body.style.overflow = "auto";
     const x = fData.map((ele) => ele.ingred);
-    console.log(x);
+
     let l = [];
     data.forEach((drink) => {
       const newIngreds = drink.ingredients.map((d) => d.toUpperCase());
@@ -21,7 +21,6 @@ class Data extends Component {
         l.push(drink);
       }
     });
-
     this.setState({ data: l, fData });
   }
 
@@ -33,7 +32,6 @@ class Data extends Component {
             pathname: "/homepage",
           }}
         ></Link>
-
         <h1>Here Are The Drinks You Can Make</h1>
         <div id="galleryContainer">
           {this.state.data.map((d) => (

@@ -7,25 +7,30 @@ const User = new mongoose.Schema({
   password: String,
 });
 
-const Drink = new mongoose.Schema({
-  id: String,
-  name: String,
-  ingredients: [String],
-  measures: [String],
-  instructions: String,
-  image: String,
-  alcoholic: Boolean,
-  glass: String,
-});
+// const Drink = new mongoose.Schema({
+//   id: String,
+//   name: String,
+//   ingredients: [String],
+//   measures: [String],
+//   instructions: String,
+//   image: String,
+//   alcoholic: Boolean,
+//   glass: String,
+// });
 
-const SavedDrinks = new mongoose.Schema({
-  username: String,
-  drinks: [Drink],
-});
+// const SavedDrinks = new mongoose.Schema({
+//   username: String,
+//   drinks: [Drink],
+// });
 
-const UserIngredients = new mongoose.Schema({
+const UserItems = new mongoose.Schema({
   username: String,
-  ingredients: [String],
+  ingredients: [
+    {
+      ingred: String,
+      isChecked: Boolean,
+    },
+  ],
 });
 
 User.plugin(passportLocalMongoose);
@@ -44,9 +49,9 @@ let dbconf = "mongodb://drinkUser:drinks123@localhost:27017/DrinkMaker";
 // }
 
 mongoose.model("User", User);
-mongoose.model("SavedDrinks", SavedDrinks);
-mongoose.model("Drink", Drink);
-mongoose.model("UserIngredients", UserIngredients);
+// mongoose.model("SavedDrinks", SavedDrinks);
+// mongoose.model("Drink", Drink);
+mongoose.model("UserItems", UserItems);
 
 mongoose.connect(process.env.MONGODB_URI || dbconf, {
   useNewUrlParser: true,

@@ -22,7 +22,6 @@ class Register extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
     const user = {
       username: this.state.username,
       password: this.state.password,
@@ -45,31 +44,35 @@ class Register extends Component {
       return <Redirect to={{ pathname: "/login" }} />;
     }
     return (
-      <div id="registration">
+      <div id="registration_login">
         <h1>Register Here</h1>
         <form id="registerForm" onSubmit={this.onSubmit}>
-          <label>Username: </label>
-          <input
-            id="username"
-            type="text"
-            value={this.state.username}
-            onChange={this.onChangeUsername}
-            required
-          />
-          <br />
-          <br />
-          <br />
-          <label>Password: </label>
-          <input
-            id="username"
-            type="text"
-            value={this.state.password}
-            onChange={this.onChangePassword}
-            required
-          />
-          <br />
-          <br />
-          <input id="submitButton" type="submit"></input>
+          <div id="usernameDiv">
+            <label>Username: </label>
+            <input
+              id="username"
+              type="text"
+              value={this.state.username}
+              onChange={this.onChangeUsername}
+              required
+            />
+            <br />
+            <br />
+            <br />
+          </div>
+          <div id="passwordDiv">
+            <label>Password: </label>
+            <input
+              id="password"
+              type="password"
+              value={this.state.password}
+              onChange={this.onChangePassword}
+              required
+            />
+            <br />
+            <br />
+          </div>
+          <button id="submitButton">Register</button>
         </form>
         <h3 id="error">{this.state.error}</h3>
       </div>

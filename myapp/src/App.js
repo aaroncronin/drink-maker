@@ -16,60 +16,70 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: [],
+      items: all_ingreds,
       loggedIn: false,
       username: null,
       filtered: [],
     };
-
-    // this.getUser = this.getUser.bind(this);
-    // this.updateUser = this.updateUser.bind(this);
-    // this.handleLogIn = this.handleLogIn.bind(this);
-    // this.handleLogOut = this.handleLogOut.bind(this);
-    // this.saveIngredients = this.saveIngredients.bind(this);
   }
 
   // async
   async componentDidMount() {
-    // this.setState({
-    //   items: all_ingreds,
-    // });
-
     // await
-    await this.getUser();
-    console.log("HELLLOOOOO: state", this.state.loggedIn);
-    if (this.state.loggedIn) {
-      this.getItems();
+    const username = await this.getUser();
+    console.log(username);
+    const loggedIn = username !== undefined;
+    console.log(loggedIn);
+    if (loggedIn) {
+      const items = await this.getItems();
+      console.log(items);
+      this.setState({ loggedIn, username, items });
     } else {
+      console.log("yuo");
       this.setState({ items: all_ingreds });
     }
-    // if logged in then getItems()
-    // else set to all_ingreds
+    // if (this.state.loggedIn) {
+    //   console.log("LOGGED IN");
+    // } else {
+    //   this.setState({ items: all_ingreds });
+    // }
   }
 
-  getUser = () => {
-    axios.get("/user/login").then((res) => {
-      if (res.data === "") {
-        this.setState({
-          loggedIn: false,
-          username: null,
-        });
-      } else if (res.data.username) {
-        this.setState({ loggedIn: true, username: res.data.username });
-
-        // getItems()
-      }
-    });
-    return;
+  getUser = async () => {
+    const res = await axios.get("/user/login");
+    return res.data.username;
   };
 
-  // getItems() function sets items state based on log in
-  getItems = () => {
-    console.log("hello");
-    axios.get("/user/items").then((res) => {
-      console.log("items: ", res.data);
-    });
+  getItems = async () => {
+    const res = await axios.get("/user/items");
+    return res.data;
   };
+
+  // getUser = () => {
+  //   axios.get("/user/login").then((res) => {
+  //     if (res.data === "") {
+  //       this.setState({
+  //         loggedIn: false,
+  //         username: null,
+  //       });
+  //     } else if (res.data.username) {
+  //       this.setState({ loggedIn: true, username: res.data.username });
+  //       this.getItems();
+  //     }
+  //   });
+  // };
+
+  // // getItems() function sets items state based on log in
+  // getItems = () => {
+  //   axios
+  //     .get("/user/items")
+  //     .then((res) => {
+  //       console.log("items: ", res.data);
+  //       this.setState({ items: res.data });
+  //     })
+  //     .catch((err) => console.log("err: ", err));
+  // };
+
   handleLogIn = (data) => {
     if (data !== null) {
       this.setState({ loggedIn: true, username: data });
@@ -77,9 +87,7 @@ class App extends Component {
   };
 
   handleLogOut = (obj) => {
-    console.log(obj);
     this.setState({ loggedIn: obj.loggedIn, username: obj.username });
-    console.log("state: ", this.state);
   };
 
   handleChange = (event) => {

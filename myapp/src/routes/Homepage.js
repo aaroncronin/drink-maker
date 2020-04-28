@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Modal from "./Modal";
 
 function Homepage(props) {
   const [filtered, setFiltered] = useState([]);
   const [searched, setSearched] = useState("");
-
+  const [mode, setMode] = useState(false);
   /*
     componentDidMount() {
       let checked = this.props.items.filter((d) => d.isChecked);
@@ -11,19 +13,22 @@ function Homepage(props) {
     }
     */
   useEffect(() => {
+    console.log("homepage");
     let checked = props.items.filter((d) => d.isChecked);
     setFiltered(checked);
+    document.body.style.overflow = "auto";
   }, [props.items]);
 
   const handleSubmit = (event) => {
-    //console.log(this.state.filtered);
+    event.preventDefault();
     const x = props.items.filter((i) => i.isChecked);
     localStorage.setItem("filteredItems", JSON.stringify(x));
-    event.preventDefault();
+    if (props.loggedIn) {
+      axios.post("/user/saveIngredients", props.items).then((res) => {
+        console.log("res: ", res);
+      });
+    }
     props.history.push("/data");
-
-    // MAKE POST REQUEST HERE
-    // redirect
   };
 
   const handleSearchSubmit = (event) => {
@@ -36,24 +41,35 @@ function Homepage(props) {
     setSearched(searched);
   };
 
+  const showModal = () => {
+    setMode(!mode);
+  };
+
   const loggedIn = props.loggedIn;
-  //const loggedIn = false;
-  //const username = this.props.username;
-  // console.log(username);
-  //const checked = props.items.filter((d) => d.isChecked).map((d) => d.ingred);
   const checked = filtered.map((d) => d.ingred);
   const search = props.items.filter((d) => d.ingred.includes(searched));
 
   return (
     <div className="App">
+      {/* 
       <div id="itemLogin">{loggedIn ? <div></div> : <div> </div>}</div>
-      <form id="change" onSubmit={handleSearchSubmit}>
-        Search: <input type="text" onChange={handleSearchChange}></input>
-      </form>
 
+     <button id="modal" onClick={showModal}>
+        MODAL
+      </button> 
+      <Modal mode={mode} {...props} />*/}
+
+      <h2 class="text">Select The Ingredients In Your Home</h2>
+      <h2 class="text">Your Ingredients</h2>
       <form id="container" onSubmit={handleSubmit}>
-        <div id="allIngredients">
-          <h2 class="text">Select The Ingredients In Your Home</h2>
+        <div id="searchTable">
+          <form id="change" onSubmit={handleSearchSubmit}>
+            <input
+              type="text"
+              onChange={handleSearchChange}
+              placeholder="Search for Ingredient"
+            ></input>
+          </form>
           <table class="ingredientsTable">
             {search.map((d) => (
               <tbody>
@@ -75,7 +91,6 @@ function Homepage(props) {
         </div>
 
         <div id="yourIngredients">
-          <h2 class="text">Your Ingredients</h2>
           <table class="ingredientsTable">
             {checked.map((d) => (
               <tbody>
@@ -87,10 +102,10 @@ function Homepage(props) {
               </tbody>
             ))}
           </table>
+          <button id="submitIngredients" type="submit">
+            Click For Drinks!
+          </button>
         </div>
-        <button id="submitIngredients" type="submit">
-          Submit
-        </button>
       </form>
     </div>
   );
@@ -209,76 +224,4 @@ function Homepage(props) {
 //   }
 // }
 
-// function Homepage(props) {
-//   let filteredData = props.items.filter((d) => d.isChecked);
-
-//   function handleSubmit(event) {
-//     localStorage.setItem("filteredItems", JSON.stringify(filteredData));
-//     event.preventDefault();
-//     props.history.push("/data");
-//     // redirect
-//   }
-//   let x = [];
-//   function handleSearch(event) {
-//     event.preventDefault();
-//     const search = event.target.value.toUpperCase();
-//     if (!search) {
-//       console.log("hello");
-//     }
-//     console.log(search);
-//     if (search === "") {
-//       x = ["aaron"];
-//     } else {
-//       props.items.filter((d) => d.ingred.includes(search));
-//     }
-//     return x;
-//   }
-//   const arr = ["AARON", "BRANDON", "TIM", "AARON"];
-//   return (
-//     <div className="App">
-//       <form onChange={handleSearch}>
-//         Enter data:<input type="text"></input>
-//       </form>
-//       <form id="container" onSubmit={handleSubmit}>
-//         <div id="allIngredients">
-//           <h2 class="text">Select The Ingredients In Your Home</h2>
-//           <table class="ingredientsTable">
-//             {props.items.map((d) => (
-//               <tbody>
-//                 <tr>
-//                   <td>
-//                     <label>{d.ingred}</label>
-//                     <input
-//                       id="checkbox"
-//                       type="checkbox"
-//                       name={d.ingred}
-//                       checked={d.isChecked}
-//                       onChange={props.handleChange}
-//                     ></input>
-//                   </td>
-//                 </tr>
-//               </tbody>
-//             ))}
-//           </table>
-//         </div>
-
-//         <div id="yourIngredients">
-//           <h2 class="text">Your Ingredients</h2>
-//           <table class="ingredientsTable">
-//             {filteredData.map((d) => (
-//               <tr>
-//                 <td>
-//                   <div id="ingredient">{d.ingred}</div>
-//                 </td>
-//               </tr>
-//             ))}
-//           </table>
-//         </div>
-//         <button id="submitIngredients" type="submit">
-//           Submit
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
 export default Homepage;

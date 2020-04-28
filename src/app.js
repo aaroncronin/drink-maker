@@ -9,9 +9,12 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const fs = require("fs");
+const mongoose = require("mongoose");
 
 const PORT = process.env.PORT || 5000;
 const routes = require("./routes/routes");
+
+const UserItems = mongoose.model("UserItems");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -58,11 +61,6 @@ app.post("/user/login", (req, res, next) => {
 });
 app.get("/user/login", (req, res) => {
   res.send(req.user);
-  // if (req.user !== undefined) {
-  //   res.send(req.user);
-  // } else {
-  //   console.log("REQ USER UNDEFINED");
-  // }
 });
 
 app.get("/user/logout", (req, res) => {
@@ -70,14 +68,29 @@ app.get("/user/logout", (req, res) => {
   res.send(req.user);
 });
 
+mongoose.set("useFindAndModify", false);
 app.post("/user/saveIngredients", (req, res) => {
-  console.log(req.body);
+  const user = req.user.username;
+  const items = req.body;
+
+  const filter = { username: user };
+  const update = { ingredients: items };
+  UserItems.findOneAndUpdate(filter, update, { upsert: true }, (err, data) => {
+    if (err) {
+      res.send("500 error");
+    } else if (!err) {
+      res.send("success");
+    }
+  });
+  //console.log(req.body);
 });
 
 app.get("/user/items", (req, res) => {
-  console.log("hello: ", req.user);
-  res.send("ABCDEF");
+  UserItems.find({ username: req.user.username }, (err, data) => {
+    res.send(data[0].ingredients);
+  });
 });
+
 if (process.env.NODE_ENV === "PRODUCTION") {
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "myapp", "build", "index.html"));

@@ -4,24 +4,19 @@ import axios from "axios";
 class Login extends Component {
   constructor(props) {
     super(props);
-
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.state = { username: "", password: "", error: "" };
   }
 
-  onChangeUsername(event) {
+  onChangeUsername = (event) => {
     this.setState({ username: event.target.value });
-  }
+  };
 
-  onChangePassword(event) {
+  onChangePassword = (event) => {
     this.setState({ password: event.target.value });
-  }
+  };
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault();
-
     const user = {
       username: this.state.username,
       password: this.state.password,
@@ -30,7 +25,6 @@ class Login extends Component {
       .post("/user/login", user)
       .then((res) => {
         if (res.data.message === "success") {
-          localStorage.setItem("username", JSON.stringify(res.data.user));
           this.props.handleLogIn(res.data.user);
           this.props.history.push("/");
         } else {
@@ -41,12 +35,11 @@ class Login extends Component {
         console.log("login error", error);
       });
     this.setState({ name: "", password: "" });
-  }
+  };
   render() {
     return (
-      <div id="registration">
+      <div id="registration_login">
         <h1>Login Here</h1>
-
         <form id="registerForm" onSubmit={this.onSubmit}>
           <div id="usernameDiv">
             <label>Username: </label>
@@ -72,8 +65,8 @@ class Login extends Component {
             />
             <br />
             <br />
-            <input id="submitButton" type="submit"></input>
           </div>
+          <button id="submitButton">Login</button>
         </form>
         <h3 id="error">{this.state.error}</h3>
       </div>
