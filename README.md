@@ -1,6 +1,6 @@
 # Drink Maker
 
-[Drink Maker Website](aaroncronin-drinkmaker.herokuapp.com)
+## Website: http://aaroncronin-drinkmaker.herokuapp.com
 
 ## Overview
 
