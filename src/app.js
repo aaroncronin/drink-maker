@@ -123,7 +123,6 @@ app.listen(PORT, () => {
           for (let i = 0; i < 26; i++) {
             if (json[i]["drinks"] !== null) {
               json[i]["drinks"].forEach((ele) => {
-                let z = {};
                 const abc = Object.keys(ele).filter(
                   (item) => item.includes("Ingredient") && ele[item] !== null
                 );
