@@ -28,7 +28,12 @@ const Data = () => {
           pathname: "/homepage",
         }}
       ></Link>
-      <h1>Here Are The Drinks You Can Make</h1>
+      {data.length === 0 ? (
+        <h1>No Drinks With Those Ingredients. Go Back and Enter More!</h1>
+      ) : (
+        <h1>Happy Drinking! Click On a Drink for More Details.</h1>
+      )}
+
       <div id="galleryContainer">
         {data.map((d) => (
           <div className="gallery">

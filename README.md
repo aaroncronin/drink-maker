@@ -4,13 +4,13 @@
 
 Alcohol sales have increased more than 50% during quarantine compared to this time last year. People are passing the time by drinking, but sometimes just grabbing a liquor and a mixer can be boring. So here comes Drink Maker!
 
-Drink Maker allows people to select ingredients they have in their house and Drink Maker shows you different cocktails you could make. The site does not require someone to register or login, but they do have the option. If a user registers, then they can save drinks that they like to their account. During a time when people are looking for fun things to do in their homes, Drink Maker is the perfect solution!
+Drink Maker allows people to select ingredients they have in their house and Drink Maker shows you different cocktails you could make. The site does not require someone to register or login, but they do have the option. If a user registers, then the ingredients they checked off that they have in their house are automatically saved for when they login at a later time. During a time when people are looking for fun things to do in their homes, Drink Maker is the perfect solution!
 
 ## Data Model
 
-The application will store Users and a User's Saved Drink
+The application will store Users and a User's Saved Ingredients
 
-- a user can save drinks they like to their account
+- when a user is logged in, checked off ingredients are auto-saved
 - the drinks are sourced from a cocktail API
 
 An Example User:
@@ -22,26 +22,12 @@ An Example User:
 }
 ```
 
-An Example User's Saved Drinks:
+An Example User's Saved Ingredients:
 
 ```javascript
 {
   username: "aaroncronin"; // references user,
-  drinks: [Drink]; // array of Drink schema
-}
-```
-
-An Example Drink:
-
-```javascript
-{
-  id: 123,
-  name: "margarita",
-  ingredients: [String],
-  instructions: String,
-  image: "margarita.png",
-  alcoholic: True,
-  glass: // type of glass the drink should be served in
+  ingredients: [{ ingred, isChecked }]; // array of ingredients
 }
 ```
 
@@ -51,27 +37,23 @@ An Example Drink:
 
 /signin - login page
 
-![signin](src/charts/wireframes/signin.png)
+![login](src/charts/wireframes/signin.png)
 
 /register - register page
 
 ![register](src/charts/wireframes/register.png)
 
-/homepage - login page
+/homepage - select your ingredients
 
 ![homepage](src/charts/wireframes/homepage.png)
 
-/searchresults - login page
+/searchresults - drinks to make
 
-![gamesettings](src/charts/wireframes/searchresults.png)
+![results](src/charts/wireframes/searchresults.png)
 
-/drink - login page
+/drink - item page
 
-![gameplay](src/charts/wireframes/drink.png)
-
-/saveddrinks - login page
-
-![overall stats](src/charts/wireframes/saveddrinks.png)
+![item](src/charts/wireframes/drink.png)
 
 ## Site Map
 
@@ -83,8 +65,7 @@ An Example Drink:
 2. as a non-registered or registered user, I can see cocktails I can make by entering liquors and other ingredients I have in my house
 3. as a non-registered or registered user, I can view a drink's details, such as ingredients and instructions on how to make
 4. as a registered user, I can sign in to my account
-5. as a signed in user, I can save drinks I like to my account
-6. as a signed in user, I can view my saved drinks
+5. as a signed in user, I can see which ingredients I had checked off previously
 
 ## Research Topics
 
@@ -95,9 +76,9 @@ An Example Drink:
 - (5 points) react.js
   - I will use react for my frontend framework
   - I have never worked with react, only node for backend, so this will be a challenge for me
-- (4 points) Client side form validation when user registers
-  - users must enter a username and password to register
-  - the "confirm password" field must match the "password" field at the register page
+- (3 points) External cocktail API
+  - I will be sourcing the cocktail information from a cocktail database API
+  - I do not have much experience with fetch and Promises in javascript, so this will be a fun challenge
 
 ## [Link to Initial Main Project File](app.js)
 

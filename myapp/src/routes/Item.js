@@ -12,10 +12,8 @@ const Item = (props) => {
     }
   }
   document.body.style.overflow = "auto";
+  window.scrollTo(0, 0);
 
-  // SCROLL?????
-
-  //window.scrollTo(0, 0);
   return (
     <div id="drinkPage">
       <div id="name">{data.name}</div>

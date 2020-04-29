@@ -5,7 +5,7 @@ function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [message] = useState(props.location.data);
+  const [message] = useState("Succesfully Registered! Login Below.");
 
   const onChangeUsername = (event) => {
     setUsername(event.target.value);
@@ -38,9 +38,10 @@ function Login(props) {
 
   return (
     <div id="registration_login">
-      <h3 id="message">{message}</h3>
+      <h3 className={props.location.data ? "showMessage" : "hideMessage"}>
+        {message}
+      </h3>
       <h1>Login</h1>
-
       <form id="registerForm" onSubmit={onSubmit}>
         <div id="usernameDiv">
           <label>Username: </label>

@@ -158,7 +158,7 @@ a {
   font-weight: bold;
 }
 .Data h1 {
-  margin-left: 8%;
+  margin-left: 5%;
   font-size: 45px;
 }
 
@@ -176,20 +176,32 @@ a {
 }
 
 #registration_login h1 {
-  padding-top: 90px;
   color: #11283b;
   text-align: center;
   text-decoration: underline;
-}
-
-#message {
-  color: #11283b;
 }
 
 #registration_login label {
   color: #11283b;
   font-weight: bold;
   font-size: larger;
+}
+
+#registerTitle {
+  padding-top: 84px;
+}
+
+.showMessage {
+  visibility: visible;
+  color: #11283b;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.hideMessage {
+  visibility: hidden;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 #submitButton {

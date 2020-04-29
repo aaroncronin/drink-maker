@@ -29,12 +29,12 @@ const Register = (props) => {
 
   if (isRegistered) {
     const message = "Succesfully Registered! Login to Continue.";
-    return <Redirect to={{ pathname: "/login", data: message }} />;
+    return <Redirect to={{ pathname: "/login", data: true }} />;
   }
 
   return (
     <div id="registration_login">
-      <h1>Register Here</h1>
+      <h1 id="registerTitle">Register</h1>
       <form id="registerForm" onSubmit={onSubmit}>
         <div id="usernameDiv">
           <label>Username: </label>

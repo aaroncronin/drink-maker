@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 
 const passport = require("passport");
-const connectEnsureLogin = require("connect-ensure-login");
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
