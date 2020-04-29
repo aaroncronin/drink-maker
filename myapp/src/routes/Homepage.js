@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Modal from "./Modal";
 
-function Homepage(props) {
+const Homepage = (props) => {
   const [filtered, setFiltered] = useState([]);
   const [searched, setSearched] = useState("");
-  const [mode, setMode] = useState(false);
-  /*
-    componentDidMount() {
-      let checked = this.props.items.filter((d) => d.isChecked);
-      this.setState({ filtered: checked });
-    }
-    */
+
   useEffect(() => {
-    console.log("homepage");
     let checked = props.items.filter((d) => d.isChecked);
     setFiltered(checked);
     document.body.style.overflow = "auto";
@@ -24,9 +16,7 @@ function Homepage(props) {
     const x = props.items.filter((i) => i.isChecked);
     localStorage.setItem("filteredItems", JSON.stringify(x));
     if (props.loggedIn) {
-      axios.post("/user/saveIngredients", props.items).then((res) => {
-        console.log("res: ", res);
-      });
+      axios.post("/user/saveIngredients", props.items);
     }
     props.history.push("/data");
   };
@@ -41,27 +31,14 @@ function Homepage(props) {
     setSearched(searched);
   };
 
-  const showModal = () => {
-    setMode(!mode);
-  };
-
-  const loggedIn = props.loggedIn;
   const checked = filtered.map((d) => d.ingred);
   const search = props.items.filter((d) => d.ingred.includes(searched));
 
   return (
     <div className="App">
-      {/* 
-      <div id="itemLogin">{loggedIn ? <div></div> : <div> </div>}</div>
-
-     <button id="modal" onClick={showModal}>
-        MODAL
-      </button> 
-      <Modal mode={mode} {...props} />*/}
-
-      <h2 class="text">Select The Ingredients In Your Home</h2>
-      <h2 class="text">Your Ingredients</h2>
-      <form id="container" onSubmit={handleSubmit}>
+      <h2 className="text">Select The Ingredients In Your Home</h2>
+      <h2 className="text">Your Ingredients</h2>
+      <div id="container">
         <div id="searchTable">
           <form id="change" onSubmit={handleSearchSubmit}>
             <input
@@ -70,19 +47,20 @@ function Homepage(props) {
               placeholder="Search for Ingredient"
             ></input>
           </form>
-          <table class="ingredientsTable">
+          <table className="ingredientsTable">
             {search.map((d) => (
-              <tbody>
+              <tbody key={d.ingred}>
                 <tr>
                   <td>
-                    <label>{d.ingred}</label>
-                    <input
-                      id="checkbox"
-                      type="checkbox"
-                      name={d.ingred}
-                      checked={d.isChecked}
-                      onChange={props.handleChange}
-                    ></input>
+                    <div name={d.ingred} onClick={props.handleChange}>
+                      <label name={d.ingred}>{d.ingred}</label>
+                      <input
+                        id="checkbox"
+                        type="checkbox"
+                        name={d.ingred}
+                        checked={d.isChecked}
+                      ></input>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -91,7 +69,7 @@ function Homepage(props) {
         </div>
 
         <div id="yourIngredients">
-          <table class="ingredientsTable">
+          <table className="ingredientsTable">
             {checked.map((d) => (
               <tbody>
                 <tr>
@@ -102,14 +80,14 @@ function Homepage(props) {
               </tbody>
             ))}
           </table>
-          <button id="submitIngredients" type="submit">
+          <button id="submitIngredients" onClick={handleSubmit}>
             Click For Drinks!
           </button>
         </div>
-      </form>
+      </div>
     </div>
   );
-}
+};
 
 // import React, { Component } from "react";
 

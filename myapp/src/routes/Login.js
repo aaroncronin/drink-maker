@@ -1,77 +1,77 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { username: "", password: "", error: "" };
-  }
+function Login(props) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [message] = useState(props.location.data);
 
-  onChangeUsername = (event) => {
-    this.setState({ username: event.target.value });
+  const onChangeUsername = (event) => {
+    setUsername(event.target.value);
   };
 
-  onChangePassword = (event) => {
-    this.setState({ password: event.target.value });
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
   };
 
-  onSubmit = (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
     const user = {
-      username: this.state.username,
-      password: this.state.password,
+      username: username,
+      password: password,
     };
     axios
       .post("/user/login", user)
       .then((res) => {
         if (res.data.message === "success") {
-          this.props.handleLogIn(res.data.user);
-          this.props.history.push("/");
+          props.handleLogIn(res.data.user);
+          props.history.push("/");
         } else {
-          this.setState({ error: res.data });
+          setError(res.data);
         }
       })
-      .catch((error) => {
-        console.log("login error", error);
+      .catch((err) => {
+        console.log("login error", err);
       });
-    this.setState({ name: "", password: "" });
   };
-  render() {
-    return (
-      <div id="registration_login">
-        <h1>Login Here</h1>
-        <form id="registerForm" onSubmit={this.onSubmit}>
-          <div id="usernameDiv">
-            <label>Username: </label>
-            <input
-              id="username"
-              type="text"
-              value={this.state.username}
-              onChange={this.onChangeUsername}
-              required
-            />
-            <br />
-            <br />
-            <br />
-          </div>
-          <div id="passwordDiv">
-            <label>Password: </label>
-            <input
-              id="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.onChangePassword}
-              required
-            />
-            <br />
-            <br />
-          </div>
-          <button id="submitButton">Login</button>
-        </form>
-        <h3 id="error">{this.state.error}</h3>
-      </div>
-    );
-  }
+
+  return (
+    <div id="registration_login">
+      <h3 id="message">{message}</h3>
+      <h1>Login</h1>
+
+      <form id="registerForm" onSubmit={onSubmit}>
+        <div id="usernameDiv">
+          <label>Username: </label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={onChangeUsername}
+            required
+          />
+          <br />
+          <br />
+          <br />
+        </div>
+        <div id="passwordDiv">
+          <label>Password: </label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={onChangePassword}
+            required
+          />
+          <br />
+          <br />
+        </div>
+        <button id="submitButton">Login</button>
+      </form>
+      <h3 id="error">{error}</h3>
+    </div>
+  );
 }
 
 export default Login;

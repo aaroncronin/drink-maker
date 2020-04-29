@@ -32,24 +32,16 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-//CUSTOM MIDDLEWARE
-
-app.use(function (req, res, next) {
-  if (req.user) {
-    res.locals.currentUser = req.user;
-  }
-  next();
-});
 app.use("/user", routes);
-
 app.use(express.static(path.join(__dirname, "..", "myapp", "build")));
+
 app.post("/user/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       return next(err);
     }
     if (!user) {
-      res.send("Password or username is incorrect!");
+      return res.send("Password or username is incorrect!");
     }
     req.logIn(user, function (err) {
       if (err) {
@@ -59,6 +51,7 @@ app.post("/user/login", (req, res, next) => {
     });
   })(req, res, next);
 });
+
 app.get("/user/login", (req, res) => {
   res.send(req.user);
 });
@@ -69,6 +62,7 @@ app.get("/user/logout", (req, res) => {
 });
 
 mongoose.set("useFindAndModify", false);
+
 app.post("/user/saveIngredients", (req, res) => {
   const user = req.user.username;
   const items = req.body;
@@ -82,12 +76,15 @@ app.post("/user/saveIngredients", (req, res) => {
       res.send("success");
     }
   });
-  //console.log(req.body);
 });
 
 app.get("/user/items", (req, res) => {
   UserItems.find({ username: req.user.username }, (err, data) => {
-    res.send(data[0].ingredients);
+    if (data.length !== 0) {
+      res.send(data[0].ingredients);
+    } else {
+      res.send("error");
+    }
   });
 });
 
@@ -155,8 +152,8 @@ app.listen(PORT, () => {
             }
           }
 
-          const test = Array.from(s).sort();
-          test.forEach((item) => {
+          const sortedArr = Array.from(s).sort();
+          sortedArr.forEach((item) => {
             let x = {};
             x["ingred"] = item;
             x["isChecked"] = false;
@@ -167,7 +164,6 @@ app.listen(PORT, () => {
           console.log("Data read.");
           const data_obj = { all_ingreds: all_ingreds, data: flattened };
           fs.writeFileSync("../myapp/src/data.json", JSON.stringify(data_obj));
-          // save flattened to file
         })
         .catch(function () {
           console.log("Cant fetch API");

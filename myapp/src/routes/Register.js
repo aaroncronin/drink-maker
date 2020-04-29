@@ -1,83 +1,71 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
-class Register extends Component {
-  constructor(props) {
-    super(props);
+const Register = (props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isRegistered, setRegistered] = useState(false);
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.state = { username: "", password: "", error: "", isRegistered: false };
-  }
+  const onChangeUsername = (event) => {
+    setUsername(event.target.value);
+  };
 
-  onChangeUsername(event) {
-    this.setState({ username: event.target.value });
-  }
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  };
 
-  onChangePassword(event) {
-    this.setState({ password: event.target.value });
-  }
-
-  onSubmit(event) {
+  const onSubmit = (event) => {
     event.preventDefault();
-    const user = {
-      username: this.state.username,
-      password: this.state.password,
-    };
-    axios.post("/user/register", user).then((res) => {
-      console.log(res);
+    axios.post("/user/register", { username, password }).then((res) => {
       if (res.data.message === "success") {
-        this.setState({ isRegistered: true });
+        setRegistered(true);
       } else {
-        this.setState({ error: res.data });
+        setError(res.data);
       }
     });
-    // .catch((error) => {
-    //   console.log(error);
-    // });
-    this.setState({ name: "", password: "" });
+  };
+
+  if (isRegistered) {
+    const message = "Succesfully Registered! Login to Continue.";
+    return <Redirect to={{ pathname: "/login", data: message }} />;
   }
-  render() {
-    if (this.state.isRegistered) {
-      return <Redirect to={{ pathname: "/login" }} />;
-    }
-    return (
-      <div id="registration_login">
-        <h1>Register Here</h1>
-        <form id="registerForm" onSubmit={this.onSubmit}>
-          <div id="usernameDiv">
-            <label>Username: </label>
-            <input
-              id="username"
-              type="text"
-              value={this.state.username}
-              onChange={this.onChangeUsername}
-              required
-            />
-            <br />
-            <br />
-            <br />
-          </div>
-          <div id="passwordDiv">
-            <label>Password: </label>
-            <input
-              id="password"
-              type="password"
-              value={this.state.password}
-              onChange={this.onChangePassword}
-              required
-            />
-            <br />
-            <br />
-          </div>
-          <button id="submitButton">Register</button>
-        </form>
-        <h3 id="error">{this.state.error}</h3>
-      </div>
-    );
-  }
-}
+
+  return (
+    <div id="registration_login">
+      <h1>Register Here</h1>
+      <form id="registerForm" onSubmit={onSubmit}>
+        <div id="usernameDiv">
+          <label>Username: </label>
+          <input
+            id="username"
+            type="text"
+            value={username}
+            onChange={onChangeUsername}
+            required
+          />
+          <br />
+          <br />
+          <br />
+        </div>
+        <div id="passwordDiv">
+          <label>Password: </label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={onChangePassword}
+            required
+          />
+          <br />
+          <br />
+        </div>
+        <button id="submitButton">Register</button>
+      </form>
+      <h3 id="error">{error}</h3>
+    </div>
+  );
+};
 
 export default Register;

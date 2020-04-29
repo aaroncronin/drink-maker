@@ -14,8 +14,12 @@ img {
   border-radius: 10px;
 }
 
+#galleryContainer {
+  width: 95%;
+}
+
 .gallery {
-  margin-left: 4%;
+  margin-left: 5%;
   float: left;
   width: 270px;
   height: 300px;
@@ -25,10 +29,13 @@ img {
   margin-bottom: 30px;
   background-color: white;
   border-radius: 10px;
+  padding-bottom: 20px;
 }
 .gallery img {
   padding-top: 10px;
+  padding-bottom: 5px;
 }
+
 #header {
   font-size: 90px;
   background-color: #11283b;
@@ -151,8 +158,8 @@ a {
   font-weight: bold;
 }
 .Data h1 {
-  margin-left: 80px;
-  font-size: 40px;
+  margin-left: 8%;
+  font-size: 45px;
 }
 
 #registration_login {
@@ -169,10 +176,14 @@ a {
 }
 
 #registration_login h1 {
-  padding-top: 10px;
+  padding-top: 90px;
   color: #11283b;
   text-align: center;
   text-decoration: underline;
+}
+
+#message {
+  color: #11283b;
 }
 
 #registration_login label {
@@ -187,7 +198,7 @@ a {
 }
 
 #usernameDiv {
-  margin-top: 60px;
+  padding-top: 10px;
   text-align: center;
 }
 
@@ -254,7 +265,8 @@ a {
 
 #instructions {
   width: 400px;
-  height: 50%;
+  height: 300px;
+  overflow: auto;
   padding: 20px;
   background-color: white;
   color: #11283b;
@@ -265,6 +277,10 @@ a {
 }
 #instructions h3 {
   text-decoration: underline;
+}
+
+#instructions h2 {
+  padding-top: 30px;
 }
 
 #logIn {

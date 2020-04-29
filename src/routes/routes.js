@@ -44,6 +44,4 @@ router.get("/ingreds", (req, res) => {
   res.send(all_ingreds);
 });
 
-//router.get("/dummy", connectEnsureLogin.ensureLoggedIn(), (req, res) => {});
-
 module.exports = router;
