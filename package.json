@@ -19,7 +19,7 @@
   "homepage": "https://github.com/nyu-csci-ua-0480-008-spring-2020/aaroncronin-final-project#readme",
   "dependencies": {
     "eslint": "^6.8.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "hbs": "^4.1.0",
     "mongoose": "^5.9.7",
     "passport": "^0.4.1",
